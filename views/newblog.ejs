@@ -7,11 +7,11 @@
         <div class="ui form segment">    
             <div class="field">
                 <label>Title</label>
-                <input class="newBlogInputs" type="text" name="blog[title]" placeholder="Title">
+                <input class="newBlogInputs" type="text" name="blog[title]" placeholder="Title" required>
             </div>
             <div class="field">
                 <label>Author</label>
-                <input class="newBlogInputs" type="text" name="blog[author]" placeholder="Author">
+                <input class="newBlogInputs" type="text" name="blog[author]" placeholder="Author" required>
             </div>
             <div class="field">
                 <label>Image URL</label>
@@ -19,7 +19,7 @@
             </div>
             <div class="field">
                 <label>Text Area</label>
-                <textarea name="blog[content]"></textarea>
+                <textarea name="blog[content]" required></textarea>
             </div>
             <button class="ui primary button">Submit</button>
             <a class="ui button" href="/blogs">Return</a>

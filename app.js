@@ -1,6 +1,7 @@
 const express = require("express"),
       mongoose = require("mongoose"),
       bodyParser = require("body-parser"),
+      moment = require("moment"),
       app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,7 +34,8 @@ app.get("/blogs", function(req, res) {
         } else {
             console.log(searchResults);
             res.render("blogs", {
-                blogs: searchResults
+                blogs: searchResults,
+                moment: moment
             });
         }
     });
@@ -70,7 +72,8 @@ app.get("/blogs/:blogID", function(req, res) {
             res.send("Error");
         } else {
             res.render("viewblog", {
-                blog: foundBlog
+                blog: foundBlog,
+                moment: moment
             });
         }
     });
