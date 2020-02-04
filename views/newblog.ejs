@@ -1,0 +1,32 @@
+<%- include("partials/header.ejs") %>
+
+<div class="blogContainer ui piled segment">
+    <h1>New Blog</h1>
+    <form action="/blogs" method="POST">
+        
+        <div class="ui form segment">    
+            <div class="field">
+                <label>Title</label>
+                <input class="newBlogInputs" type="text" name="blog[title]" placeholder="Title">
+            </div>
+            <div class="field">
+                <label>Author</label>
+                <input class="newBlogInputs" type="text" name="blog[author]" placeholder="Author">
+            </div>
+            <div class="field">
+                <label>Image URL</label>
+                <input class="newBlogInputs" type="text" name="blog[image]" placeholder="Image URL">
+            </div>
+            <div class="field">
+                <label>Text Area</label>
+                <textarea name="blog[content]"></textarea>
+            </div>
+            <button class="ui primary button">Submit</button>
+            <a class="ui button" href="/blogs">Return</a>
+          </div>
+    </form>
+
+    
+</div>
+
+<%- include("partials/footer.ejs") %>

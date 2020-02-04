@@ -1,0 +1,37 @@
+body {
+    background: aqua;
+}
+
+i.icon {
+    font-size: 200%;
+}
+
+.ui.inverted.menu {
+    padding: 10px;
+    font-size: 200%;
+}
+
+.thumbnail {
+    width: 200px;
+    margin: 0 auto;
+    border: solid black 2px;
+}
+
+.blogContainer.ui.piled.segment {
+    width: 80.0em;
+    margin-top: 10.0em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.newBlogInputs {
+    padding: 20px;
+}
+
+.blogPic {
+    border: solid black 2px;
+}
+
+.image .ui.medium.rounded.image {
+    border: solid black 3px;
+}

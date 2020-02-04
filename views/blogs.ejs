@@ -1,0 +1,29 @@
+<%- include("partials/header.ejs") %>
+
+<div class="blogContainer ui piled segment">
+    <h1>Blogs</h1>
+    <% for (let i = 0; i < blogs.length; i++) { %>        
+        <div class="ui items">
+            <div class="item">
+                <div class="image"><img class="ui medium rounded image" src="<%= blogs[i].image %>"></div>
+                <div class="content"><a class="header"><%= blogs[i].title %></a>
+                    <div class="meta"><span><%= blogs[i].author %></span> </div>
+                    <div class="description"><p><%= blogs[i].content %></p></div>
+                    <div class="extra"><%= blogs[i].timeCreated %></div>
+                    <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+
+    <div class="card">
+        <div class="ui left piled segment">
+            Test
+            <p>Another test</p>
+            <img class="thumbnail" src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAIPESM.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f">
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer.ejs") %>
