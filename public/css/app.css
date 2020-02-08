@@ -1,5 +1,7 @@
 body {
     background: whitesmoke;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(168,168,168,1) 0%, rgba(251,253,255,1) 35%, rgba(246,249,252,1) 65%, rgba(199,199,199,1) 100%);
 }
 
 i.icon {
@@ -7,7 +9,6 @@ i.icon {
 }
 
 .ui.inverted.menu {
-    padding: 10px;
     font-size: 200%;
 }
 
@@ -17,11 +18,18 @@ i.icon {
     border: solid black 2px;
 }
 
-.blogContainer.ui.piled.segment {
-    width: 80.0em;
-    margin-top: 10.0em;
-    margin-left: auto;
-    margin-right: auto;
+#showBlogContainer {
+    width: 95%;
+    margin: 0 auto;
+}
+
+#showBlogContainer * {
+    font-size: 24px;
+}
+
+#showBlogBody, #showBlogSidebar {
+    margin-top: 2.0em;
+    font-size: 250%;
 }
 
 .newBlogInputs {
@@ -34,4 +42,19 @@ i.icon {
 
 .image .ui.medium.rounded.image {
     border: solid black 3px;
+}
+
+.ui.centered.medium.image {
+    width: 60%;
+    height: 60%;
+    border: solid black 3px;
+}
+
+.button {
+    margin: 10%;
+    color: yellow;
+}
+
+.ui.block.header {
+    text-align: center;
 }

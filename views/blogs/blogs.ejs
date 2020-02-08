@@ -1,4 +1,4 @@
-<%- include("partials/header.ejs") %>
+<%- include("../partials/header.ejs") %>
 
 <div class="blogContainer ui piled segment">
     <h1>Blogs</h1>
@@ -6,18 +6,20 @@
         <div class="ui items">
             <div class="item">
                 <div class="image"><img class="ui medium rounded image" src="<%= blogs[i].image %>"></div>
-                <div class="content"><a class="header"><%= blogs[i].title %></a>
+                <div class="content"><a class="header" href="/blogs/<%= blogs[i]._id %>"><%= blogs[i].title %></a>
                     <div class="meta"><span><%= blogs[i].author %></span> </div>
-                    <div class="description"><p><%= blogs[i].content %></p></div>
+                    <div class="description">
+                        <p>
+                            <%- blogs[i].content.substring(0, 100) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
+                        </p>
+                    </div>
                     <div class="extra"><%= moment(blogs[i].timeCreated).format("DD-MM-YYYY") %></div>
-
+ 
                     
-                    
-                    <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
                 </div>
             </div>
         </div>
     <% } %>
 </div>
 
-<%- include("partials/footer.ejs") %>
+<%- include("../partials/footer.ejs") %>
