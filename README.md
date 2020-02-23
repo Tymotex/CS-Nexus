@@ -1,2 +1,2 @@
 # CSBlog
-# Using Semantic UI, jQuery, Express and Mongoose
+Built with Semantic UI, jQuery, Node.js, Express, MongoDB with Mongoose and Passport.js
