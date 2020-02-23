@@ -1,14 +1,11 @@
-body {
+html, body {
     background: whitesmoke;
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(168,168,168,1) 0%, rgba(251,253,255,1) 35%, rgba(246,249,252,1) 65%, rgba(199,199,199,1) 100%);
+    background-image: url("https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
+    background-size: cover;
+    height: 100%;
 }
 
 i.icon {
-    font-size: 200%;
-}
-
-.ui.inverted.menu {
     font-size: 200%;
 }
 
@@ -18,18 +15,23 @@ i.icon {
     border: solid black 2px;
 }
 
-#showBlogContainer {
+#showBlogContainer, #viewBlogContainer {
     width: 95%;
+    max-width: 2000px;
     margin: 0 auto;
 }
 
-#showBlogContainer * {
-    font-size: 24px;
+#showBlogBody, #showBlogSidebar, #viewBlogBody {
+    min-height: 100%;
 }
 
-#showBlogBody, #showBlogSidebar {
-    margin-top: 2.0em;
-    font-size: 250%;
+#bigHeaderIcon {
+    font-size: 56px;
+}
+
+div.blogMainBody {
+    padding-top: 6.0em;
+    min-height: 100%;
 }
 
 .newBlogInputs {
@@ -40,8 +42,10 @@ i.icon {
     border: solid black 2px;
 }
 
+/* Blog pictures */
 .image .ui.medium.rounded.image {
     border: solid black 3px;
+    box-shadow: 5px 3px 8px black;
 }
 
 .ui.centered.medium.image {
@@ -57,4 +61,11 @@ i.icon {
 
 .ui.block.header {
     text-align: center;
+}
+
+#footer {
+    position: relative;
+    height: 200px;
+    margin-top: -200px;
+    clear: both;
 }

@@ -4,17 +4,53 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/navbar.css">
     <title>Tim's Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     </div>
 
-    <div class="ui fixed inverted menu">
-        <div class="ui container">
-            <div class="header item"><i class="code icon"></i>CS Blog</div>
-            <a class="item" href="/">Home</a>
-            <a class="item" href="/blogs">Blogs</a>
+    <div id="navbar" class="ui fixed inverted borderless huge menu">
+      <div class="ui container grid">
+        <!--Start: Desktop Nav-->
+        <div class="computer only row">
+          <a href="/"><div class="header item"><i class="code icon"></i>CS Blog</div></a>
+          <a class="item" href="/blogs">Blogs</a>
+          <% if (currentUser) { %>
             <a class="item" href="/blogs/new">New Blog</a>
+          <% } %>
+          <div class="right menu">
+            <% if (!currentUser) { %>
+              <a class="item" href="/register">Sign Up</a>
+              <a class="item" href="/login">Log In</a>
+            <% } else { %>
+              <a class="item"><em>Signed In As <strong><%= currentUser.username %></strong></em></a>
+              <a class="item" href="/logout">Log Out</a>
+            <% } %>
+          </div>
         </div>
+        <!--End: Desktop Nav-->
+        
+        <!--Start: Mobile Nav-->
+        <div class="tablet mobile only row">
+          <a class="header item"><i class="code icon"></i>CS Blog</a>
+          <div class="right menu">
+            <a class="menu item">
+              <div class="ui basic icon toggle button">
+                <i class="content icon"></i>
+              </div>
+            </a>
+          </div>
+          <div class="ui vertical accordion borderless fluid menu">
+            <a class="item" href="/blogs"> Blogs</a>
+            <a class="item" href="/register">Sign Up</a>
+            <a class="item" href="/login">Log In</a>
+            <a class="item" href="/logout">Log Out</a>
+          </div>
+        </div>
+        <!--End: Mobile Nav-->
+      </div>
     </div>
+    <!--End: Nav  -->
 
