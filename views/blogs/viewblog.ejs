@@ -33,13 +33,14 @@
                   Time posted: <%= moment(blog.timeCreated).format("LLLL ") %>
               </div>
               <br>
+              <% if (currentUser) { %>
               <div>
                 <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
                   <a class="ui positive large button" href="/blogs/<%= blog._id %>/edit">Edit post</a>
                   <button class="ui large negative button">Delete Post</button>
                 </form>
               </div>
-              
+              <% } %>
               
               <!-- COMMENTS SECTION -->
               <div class="ui horizontal divider">

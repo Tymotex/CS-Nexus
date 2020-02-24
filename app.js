@@ -15,7 +15,8 @@ const express = require("express"),
 
 const commentRoutes = require("./routes/comments"),
       blogRoutes = require("./routes/blogs"),
-      indexRoutes = require("./routes/index");
+      indexRoutes = require("./routes/index"),
+      plantRoutes = require("./routes/hydroponix");
 
 seedDB();
 
@@ -42,7 +43,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
-    res.locals.currentUser = req.user;  // Makes req.user available as the 'currentUser' variable inside ejs templates
+    res.locals.currentUser = req.user;  // Makes req.user available as the 'currentUser' variable inside ejs templates!!! No need to pass them in
     next();  // Our middleware needs to call next() in order to progress to the next function in the middleware stack
 });
 
@@ -51,9 +52,12 @@ app.use("/blogs", blogRoutes)
 app.use("/blogs/:blogID/comments", commentRoutes);
 
 // Alternative:
-app.use("/", indexRoutes);
+/*app.use("/", indexRoutes);
 app.use("/blogs", blogRoutes)
 app.use("/blogs/:blogID/comments", commentRoutes);
+*/
+
+app.use("/hydroponix", plantRoutes);
 
 app.listen(3000, function() {
     console.log("Listening on port 3000");

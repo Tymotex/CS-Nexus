@@ -20,10 +20,11 @@
           <% if (currentUser) { %>
             <a class="item" href="/blogs/new">New Blog</a>
           <% } %>
+          <a class="item" href="/hydroponix">Hydroponix</a>
           <div class="right menu">
             <% if (!currentUser) { %>
-              <a class="item" href="/register">Sign Up</a>
-              <a class="item" href="/login">Log In</a>
+              <a class="item" href="/register"><i class="user plus icon"></i> Sign Up</a>
+              <a class="item" href="/login"><i class="user circle icon"></i> Log In</a>
             <% } else { %>
               <a class="item"><em>Signed In As <strong><%= currentUser.username %></strong></em></a>
               <a class="item" href="/logout">Log Out</a>

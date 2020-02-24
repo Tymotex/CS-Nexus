@@ -15,7 +15,7 @@
                         <div class="meta"><span><%= blogs[i].author %></span> </div>
                         <div class="description">
                             <p>
-                                <%- blogs[i].content %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
+                                <%- blogs[i].content.substring(0, 100) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
                             </p>
                         </div>
                         <div class="extra"><%= moment(blogs[i].timeCreated).format("DD-MM-YYYY") %></div>

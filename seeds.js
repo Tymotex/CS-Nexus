@@ -1,6 +1,7 @@
 const mongoose = require("mongoose"),
       Blog = require("./models/blog"),
-      Comment = require("./models/comment")
+      Comment = require("./models/comment"),
+      PlantData = require("./models/plantdata");
 
 var data = [
     {
@@ -76,6 +77,8 @@ function seedDB() {
             }
         });
     });
+
+    PlantData
 }
 
 module.exports = seedDB;
