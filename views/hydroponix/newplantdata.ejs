@@ -8,11 +8,15 @@
         </h1>
         <div class="ui section divider"></div>
 
-        <form action="/hydroponix" method="POST">
+        <form action="/hydroponix" enctype='multipart/form-data' method="POST">
             <div class="ui form segment">    
                 <div class="field">
                     <label>Content</label>
                     <input class="newBlogInputs" type="text" name="content" placeholder="Content" required>
+                </div>
+                <div class="field">
+                    <label>Image</label>
+                    <input class="newBlogInputs" type="file" name="photo" required>
                 </div>
                 <button class="ui primary button">Submit</button>
                 <a class="ui button" href="/hydroponix">Return</a>

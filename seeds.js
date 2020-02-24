@@ -78,7 +78,12 @@ function seedDB() {
         });
     });
 
-    PlantData
+    PlantData.remove({}, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log("Wiped all plant data");
+    });
 }
 
 module.exports = seedDB;

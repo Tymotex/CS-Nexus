@@ -6,11 +6,15 @@
             <i id="bigHeaderIcon" class="circular tree icon"></i>
             Hydroponix Data
         </h1>
+
+        <img src="uploads/test3.png">
         <div class="ui section divider"></div>
         <% for (let i = 0; i < plantData.length; i++) { %>        
             <div>
                 <%= plantData[i].content %>
             </div>
+            <img src="uploads/<%= plantData[i].img.data %>" alt="">
+            <% console.log(plantData[i].img) %>
         <% } %>
 
         <a href="/hydroponix/new">New</a>

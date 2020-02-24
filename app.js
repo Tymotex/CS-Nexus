@@ -11,7 +11,8 @@ const express = require("express"),
       Comment = require("./models/comment"),
       User = require("./models/user"),
       seedDB = require("./seeds"),
-      app = express();
+      app = express(),
+      multer = require("multer");
 
 const commentRoutes = require("./routes/comments"),
       blogRoutes = require("./routes/blogs"),
@@ -26,8 +27,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
 app.use(expressSanitizer());
-
-
+app.use(multer({dest: "./public/uploads/"}).single("photo"));
 
 // Passport config
 
@@ -58,6 +58,7 @@ app.use("/blogs/:blogID/comments", commentRoutes);
 */
 
 app.use("/hydroponix", plantRoutes);
+
 
 app.listen(3000, function() {
     console.log("Listening on port 3000");
