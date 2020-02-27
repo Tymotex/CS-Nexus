@@ -31,19 +31,21 @@ router.get("/new", function(req, res) {
 });
 
 router.post("/", function(req, res) {
-    console.log("Trying to add new plant data");
-
+    const currTime = new Date();
+    // Using epochMilliseconds to give a uniquely identifying image filename to be associated with the new plantdata snapshot 
+    var epochMilliseconds = currTime.getTime()  // getTime() returns milliseconds
+    var newPhotoPath = __dirname + "/../public/uploads/photo_" + epochMilliseconds + ".png"
+    
     var plantData = new PlantData();
-    console.log("PATH NAME: " + req.file.path);
-    var newFileName = "/home/tim/Node/Blog/public/uploads/myphoto.png"
-    fs.rename("/home/tim/Node/Blog/" + req.file.path, newFileName, function(err) {
+    fs.rename(__dirname + "/../" + req.file.path, newPhotoPath, function(err) {  // req.file.path is the path to the newly saved photo file relative to the project directory (eg. req.file.path == public/uploads/1nhfv8cv...)
         if (err) {
             console.log(err);
             res.redirect("/");
         } else {
-            var newPath = "uploads/myphoto.png"
+            var newPath = "uploads/photo_" + epochMilliseconds + ".png"
             plantData.content = req.body.content;
             plantData.imgPath = newPath;
+            plantData.timeCreatedSinceEpoch = epochMilliseconds;
             plantData.save();
             res.redirect("/hydroponix");
         }

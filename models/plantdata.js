@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 // Mongoose model configuration
 var plantDataSchema = mongoose.Schema({
     content: String,
-    imgPath: String
+    imgPath: String,
+    timeCreatedSinceEpoch: Number
 });
 
 var PlantData = mongoose.model("plantData", plantDataSchema);
