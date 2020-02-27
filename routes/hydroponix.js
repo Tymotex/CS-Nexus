@@ -33,26 +33,35 @@ router.get("/new", function(req, res) {
 router.post("/", function(req, res) {
     console.log("Trying to add new plant data");
 
-    /*PlantData.create({
-        content: req.body.content,
-        img.data: fs.readFileSync(req.files.userPhoto.path),
-        img["contentType"]: "image/png"
-    }, function(err, newPlantData) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(newPlantData);
-        }
-    });*/
-
     var plantData = new PlantData();
     console.log("PATH NAME: " + req.file.path);
-    plantData.content = req.body.content;
-    plantData.img.data = fs.readFileSync(req.file.path);
-    plantData.img.contentType = "image/png";
-    plantData.save();
+    var newFileName = "/home/tim/Node/Blog/public/uploads/myphoto.png"
+    fs.rename("/home/tim/Node/Blog/" + req.file.path, newFileName, function(err) {
+        if (err) {
+            console.log(err);
+            res.redirect("/");
+        } else {
+            var newPath = "uploads/myphoto.png"
+            plantData.content = req.body.content;
+            plantData.imgPath = newPath;
+            plantData.save();
+            res.redirect("/hydroponix");
+        }
+    });
 
-    res.redirect("/hydroponix");
+    
 }); 
+
+/*PlantData.create({
+    content: req.body.content,
+    img.data: fs.readFileSync(req.files.userPhoto.path),
+    img["contentType"]: "image/png"
+}, function(err, newPlantData) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log(newPlantData);
+    }
+});*/
 
 module.exports = router;

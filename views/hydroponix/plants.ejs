@@ -7,14 +7,12 @@
             Hydroponix Data
         </h1>
 
-        <img src="uploads/test3.png">
         <div class="ui section divider"></div>
         <% for (let i = 0; i < plantData.length; i++) { %>        
             <div>
                 <%= plantData[i].content %>
             </div>
-            <img src="uploads/<%= plantData[i].img.data %>" alt="">
-            <% console.log(plantData[i].img) %>
+            <img src="<%= plantData[i].imgPath %>" alt="">
         <% } %>
 
         <a href="/hydroponix/new">New</a>
