@@ -19,17 +19,20 @@ router.get("/", function(req, res) {
             if (searchResults.length >= 1) {
             }
             res.render("hydroponix/plants", {
-                plantData: searchResults
+                plantData: searchResults,
+                moment: moment
             });
         }
     });
 });
 
+// Show form to create new data snapshot
 router.get("/new", function(req, res) {
     console.log("Trying to add new plant data");
     res.render("hydroponix/newplantdata");
 });
 
+// Upload data snapshot
 router.post("/", function(req, res) {
     const currTime = new Date();
     // Using epochMilliseconds to give a uniquely identifying image filename to be associated with the new plantdata snapshot 
@@ -43,17 +46,44 @@ router.post("/", function(req, res) {
             res.redirect("/");
         } else {
             var newPath = "uploads/photo_" + epochMilliseconds + ".png"
+            plantData.title = req.body.title
             plantData.content = req.body.content;
             plantData.imgPath = newPath;
-            plantData.timeCreatedSinceEpoch = epochMilliseconds;
             plantData.save();
             res.redirect("/hydroponix");
         }
     });
-
-    
 }); 
 
+router.get("/:plantID", function(req, res) {
+    PlantData.findById({_id: req.params.plantID}, function(err, foundData) {
+        if (err) {
+            res.send("Error");
+        } else {
+            console.log(foundData)
+            res.render("hydroponix/viewplantdata.ejs", {
+                plantData: foundData,
+                moment: moment
+            })
+        }
+    });
+});
+/*
+// Show
+router.get("/:blogID", function(req, res) {
+    Blog.findById({_id: req.params.blogID}).populate("comments").exec(function(err, foundBlog) {
+        if (err) {
+            res.send("Error");
+        } else {
+            console.log(foundBlog);
+            res.render("blogs/viewblog", {
+                blog: foundBlog,
+                moment: moment
+            });
+        }
+    });
+});
+*/
 /*PlantData.create({
     content: req.body.content,
     img.data: fs.readFileSync(req.files.userPhoto.path),

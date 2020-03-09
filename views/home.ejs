@@ -1,12 +1,81 @@
 <%- include("partials/header.ejs") %>
-
 <div class="blogMainBody">
     <div id="viewBlogContainer" class="blogContainer ui piled segment">
-        <h1>Home</h1>
-        <ul>
+        <div class="ui inverted vertical masthead center aligned segment">
+            <div class="ui text container">
+                <h1 id="mainHeader" class="ui inverted center header">
+                    Tim Zhang
+                </h1>
+                <h2>This website is a work in progress!</h2>
+            </div>
+        </div>
         
-        </ul>
+        <div class="contentSection">
+            <div class="ui horizontal divider">
+                About Me
+            </div>
+            <div class="ui middle aligned stackable grid container">
+                <div class="row">
+                    <div class="eight wide column">
+                        <a href="resume/CV_V1.3.3.pdf" download="Resume.pdf">
+                            <button class="ui massive primary button">
+                                My Resume
+                            </button>
+                        </a>
+                        <h3 class="ui header">We Help Companies and Companions</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos atque officiis dicta modi saepe veritatis velit assumenda quam commodi quod, voluptatem maiores at sunt rem sit et delectus tempora officia.</p>
+                        <h3 class="ui header">We Make Bananas That Can Dance</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit rerum voluptatem alias magni eos. Inventore nam laboriosam quia saepe, delectus maxime repellat vero laudantium, dicta eos dolores eligendi vitae eius.</p>
+                    </div>
+                    <div class="six wide right floated column">
+                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" class="ui large bordered rounded image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contentSection">
+            <div class="ui horizontal divider">
+                Links
+            </div>
+            <div class="ui grid">
+                <div class="five wide column myLinks">
+                    <div class="ui segment">
+                        <img class="cardImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Google_Play_symbol.svg/960px-Google_Play_symbol.svg.png">
+                        <br>
+                        <a href="https://play.google.com/store/apps/developer?id=Tymoteus">
+                            <button class="ui big secondary button linkButton">
+                                Check out my Google Play
+                            </button>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="six wide column myLinks">
+                    <div class="ui segment">
+                        <img class="cardImage" src="data:image/png;base64,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">
+                        <br>
+                        <a href="https://github.com/Tymotex?tab=repositories">
+                            <button class="ui big secondary button linkButton">
+                                Check out my GitHub repositories 
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="five wide column myLinks">
+                    <div class="ui segment">
+                        <img class="cardImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/YouTube_social_white_circle_%282017%29.svg/1024px-YouTube_social_white_circle_%282017%29.svg.png">
+                        <br>
+                        <a href="https://www.youtube.com/channel/UCIuefX9zQPux3lGCkDOdlIQ">
+                            <button class="ui big secondary button linkButton" href="">
+                                Check out my YouTube channel 
+                            </button>
+                        </a>
+                    </div>
+                </div>
+              </div>
+        </div> 
+
+
     </div>
 </div>
-
 <%- include("partials/footer.ejs") %>

@@ -7,7 +7,8 @@ const Comment = require("../models/comment");
 const User = require("../models/user");
 
 router.get("/", function(req, res) {
-    res.redirect("/blogs");
+    console.log("Attempting to view landing page")
+    res.render("home");
 });
 
 router.get("/register", function(req, res) {

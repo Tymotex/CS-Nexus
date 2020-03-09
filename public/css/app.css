@@ -44,6 +44,8 @@ div.blogMainBody {
 
 /* Blog pictures */
 .image .ui.medium.rounded.image {
+    width: 100%;
+    height: 100%;
     border: solid black 3px;
     box-shadow: 5px 3px 8px black;
 }
@@ -61,6 +63,43 @@ div.blogMainBody {
 
 .ui.block.header {
     text-align: center;
+}
+
+/* Landing Page Styles: */
+.ui.inverted.header {
+    height: 150px;
+    padding-top: 60px;
+}
+
+.cardImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    height: 150px;
+}
+
+.myLinks {
+    display: block;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.linkButton {
+    margin-top: 20px;
+}
+
+.centralButton {
+    display: block;
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#mainHeader {
+    font-size: 400%;
 }
 
 #footer {

@@ -4,18 +4,35 @@
     <div id="viewBlogContainer" class="blogContainer ui piled segment">
         <h1 class="ui center aligned icon header">
             <i id="bigHeaderIcon" class="circular tree icon"></i>
-            Hydroponix Data
+            Hydroponix Data Snapshots
         </h1>
+        <h3 class="ui center aligned icon header">
+            See all the data snapshots from the automated greenhouse here! 
+        </h3>
 
         <div class="ui section divider"></div>
-        <% for (let i = 0; i < plantData.length; i++) { %>        
-            <div>
-                <%= plantData[i].content %>
+        <% for (let i = 0; i < plantData.length; i++) { %>      
+              
+            <div class="ui items">
+                <div class="item">
+                    <div class="image">
+                        <img class="ui medium rounded image" src="<%= '../' + plantData[i].imgPath %>"href="<%= '/hydroponix/' + plantData[i]._id %>">
+                    </div>   <!-- NOTE: THE ../ WAS ADDED TO CORRECT THE IMAGE PATH -->
+                    <div class="content"><a class="header" href="<%= '/hydroponix/' + plantData[i]._id %>"><%= plantData[i].title %></a>
+                        <div class="description">
+                            <p>
+                                <%- plantData[i].content %>
+                            </p>
+                        </div>
+                        <div class="extra"><%= moment(plantData[i].timeCreated).format("MMMM Do, YYYY, h:mm:ss A") %></div>
+                    </div>
+                </div>
             </div>
-            <img src="<%= plantData[i].imgPath %>" alt="">
         <% } %>
 
-        <a href="/hydroponix/new">New</a>
+        <div>
+            <!-- <a class="ui primary button" href="/hydroponix/new">New</a> -->
+        </div>
     </div>
 </div>
 

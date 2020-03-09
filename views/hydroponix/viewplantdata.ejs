@@ -1,0 +1,47 @@
+<%- include("../partials/header.ejs") %>
+
+
+
+<div class="blogMainBody">
+    <div id="viewBlogContainer">
+        <div id="showBlogContainer" class="ui stackable grid">
+            <div id="showBlogSidebar" class="four wide column">
+                <div class="blogContainer ui piled segment">
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo repellat magnam, modi vitae deserunt eos porro dolorem necessitatibus quos eius accusantium culpa aspernatur? Placeat repellat error nihil unde voluptatem quos.</p>
+                </div>
+                <div class="ui segments">
+                    <div class="ui segment">More</div>
+                    <div class="ui segment">Content</div>
+                    <div class="ui segment">Goes</div>
+                    <div class="ui segment">Here</div>
+                </div>
+            </div>
+            <div id="showBlogBody" class="twelve wide column">
+                <div id="viewBlogBody" class="blogContainer ui piled segment">
+                    <h1 class="ui block header"><em><%= plantData.title %></em></h1>
+                    <img class="ui centered rounded medium image" src="<%= '../' + plantData.imgPath %>">
+                    <div class="ui items">
+                        <div class="ui horizontal divider">
+                            Plant Data
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="description">
+                                    <p>
+                                        <%- plantData.content %>
+                                    </p>
+                                    <p>
+                                        Snapshot Time: <em><%= moment(plantData.timeCreated).format("MMMM Do, YYYY, h:mm:ss A") %></em>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+
+
+<%- include("../partials/footer.ejs") %>
