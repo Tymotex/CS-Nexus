@@ -68,22 +68,18 @@ router.get("/:plantID", function(req, res) {
         }
     });
 });
-/*
-// Show
-router.get("/:blogID", function(req, res) {
-    Blog.findById({_id: req.params.blogID}).populate("comments").exec(function(err, foundBlog) {
+
+// Delete
+router.delete("/:plantID", function(req, res) {
+    console.log("Deleted");
+    PlantData.deleteOne({_id: req.params.plantID}, function(err) {
         if (err) {
-            res.send("Error");
-        } else {
-            console.log(foundBlog);
-            res.render("blogs/viewblog", {
-                blog: foundBlog,
-                moment: moment
-            });
+            console.log(err);
         }
     });
+    res.redirect("/hydroponix");
 });
-*/
+
 /*PlantData.create({
     content: req.body.content,
     img.data: fs.readFileSync(req.files.userPhoto.path),

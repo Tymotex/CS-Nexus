@@ -34,6 +34,13 @@
                                         Snapshot Time: <em><%= moment(plantData.timeCreated).format("MMMM Do, YYYY, h:mm:ss A") %></em>
                                     </p>
                                 </div>
+                                <% if (currentUser) { %>
+                                    <div>
+                                      <form action="/hydroponix/<%= plantData._id %>?_method=DELETE" method="POST">
+                                        <button class="ui large negative button">Delete Data Snapshot</button>
+                                      </form>
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>

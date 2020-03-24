@@ -53,9 +53,9 @@
                   <div class="comment">
                     <a class="avatar"><img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png"></a>
                     <div class="content">
-                      <a class="author"><%= blog.comments[i].author %></a>
+                      <a class="author"><%= blog.comments[i].author.username %></a>
                       <div class="metadata">
-                        <span class="date"><%= moment(blog.comments[i].timeCreated).format("DD-MM-YYYY") %></span>
+                        <span class="date"><%= moment(blog.comments[i].timeCreated).format("DD-MM-YYYY LT") %></span>
                       </div>
                       <div class="text">
                         <%= blog.comments[i].text %>

@@ -6,10 +6,6 @@
         <form action="/blogs/<%= blog._id %>/comments" method="POST">
             <div class="ui form segment">
                 <div class="field">
-                    <label>Author</label>
-                    <input class="newBlogInputs" type="text" name="comment[author]" placeholder="Author" required>
-                </div>
-                <div class="field">
                     <label>Comment</label>
                     <textarea name="comment[text]" required></textarea>
                 </div>

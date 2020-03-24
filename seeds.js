@@ -32,19 +32,27 @@ var data = [
 
 var comments = [
     {
-        author: "Techlead",
+        author: {
+            username:"Techlead"
+        },
         text: "Hello and welcome to coffee time with the ex-google ex-facebook ex-husband techlead.",
     }, 
     {
-        author: "Joshua Fluke",
+        author: {
+            username: "Joshua Fluke"
+        },
         text: "It's corporate cringe time!",
     },
     {
-        author: "Elon Musk",
+        author: {
+            username: "Elon Musk"
+        },
         text: "Where are the genetically engineered cat girls.",
     },
     {
-        author: "Elon Musk",
+        author: {
+            username: "Elon Musk"
+        },
         text: "I love 'The Hitchhiker's Guide to the Galaxy'"
     }
 ];

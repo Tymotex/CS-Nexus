@@ -31,6 +31,11 @@ router.post("/", isLoggedIn, function(req, res) {
             console.log(err);
         } else {
             Comment.create(req.body.comment, function(err, createdComment) {
+                console.log("USERNAME !!!!!!!!!!!!!!!!!!!!" + req.user.username)
+
+                createdComment.author._id = req.user._id
+                createdComment.author.username = req.user.username
+                createdComment.save()
                 foundBlog.comments.push(createdComment);
                 foundBlog.save();
                 res.redirect("/blogs/" + foundBlog._id);  // The show blog route handles populating object IDs that we push into the comments array
