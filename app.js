@@ -14,13 +14,15 @@ const express = require("express"),
       app = express(),
       multer = require("multer");
 
-const commentRoutes = require("./routes/comments"),
-      blogRoutes = require("./routes/blogs"),
-      indexRoutes = require("./routes/index"),
-      plantRoutes = require("./routes/hydroponix");
+const commentRoutes = require("./routes/commentRoutes"),
+      blogRoutes = require("./routes/blogRoutes"),
+      indexRoutes = require("./routes/indexRoutes"),
+      hydroponixRoutes = require("./routes/hydroponixRoutes");
 
+// Populating the database with sample data
 seedDB();
 
+// ===== App Configuration =====
 app.use(bodyParser.urlencoded({extended: true}));
 mongoose.connect("mongodb://localhost:27017/Blog", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 app.set("view engine", "ejs");
@@ -29,8 +31,7 @@ app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 app.use(multer({dest: "./public/uploads/"}).single("photo"));
 
-// Passport config
-
+// Passport Configuration:
 app.use(require("express-session")({
     secret: "Tim's secret sentence",   // Used to encode and decode information from a session
     resave: false,
@@ -42,24 +43,21 @@ passport.use(new LocalStrategy(User.authenticate()));   // Comes with passportLo
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Middleware Functions:
+// Makes req.user available as the 'currentUser' variable inside ejs templates
 app.use(function(req, res, next) {
-    res.locals.currentUser = req.user;  // Makes req.user available as the 'currentUser' variable inside ejs templates!!! No need to pass them in
-    next();  // Our middleware needs to call next() in order to progress to the next function in the middleware stack
+    res.locals.currentUser = req.user;  
+    // This middleware function calls next() in order to progress to the next function in the middleware stack
+    next();  
 });
 
+// ===== Routes =====
 app.use("/", indexRoutes);
 app.use("/blogs", blogRoutes)
 app.use("/blogs/:blogID/comments", commentRoutes);
+app.use("/hydroponix", hydroponixRoutes);
 
-// Alternative:
-/*app.use("/", indexRoutes);
-app.use("/blogs", blogRoutes)
-app.use("/blogs/:blogID/comments", commentRoutes);
-*/
-
-app.use("/hydroponix", plantRoutes);
-
-
+// ===== Server Startup =====
 app.listen(3000, function() {
-    console.log("Listening on port 3000");
+    console.log("Express server listening on port 3000!");
 });

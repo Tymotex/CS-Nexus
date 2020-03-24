@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 var commentSchema = mongoose.Schema({
     author: {
+        // 'ref' tells Mongoose which model to use when the populate() method is eventually called
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        username: String,
-        fuck: String
+        username: String
     },
     text: String,
     timeCreated: {type: Date, default: Date.now}
