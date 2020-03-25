@@ -12,7 +12,7 @@
                 <div class="item">
                     <div class="image"><img class="ui medium rounded image" src="<%= blogs[i].image %>"></div>
                     <div class="content"><a class="header" href="/blogs/<%= blogs[i]._id %>"><%= blogs[i].title %></a>
-                        <div class="meta"><span><%= blogs[i].author %></span> </div>
+                        <div class="meta"><span><%= blogs[i].author.username %></span> </div>
                         <div class="description">
                             <p>
                                 <%- blogs[i].content.substring(0, 100) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>

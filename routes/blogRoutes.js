@@ -19,6 +19,26 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+// Checks if the user is authorised, ie. that their _id is the same as the _id of the author
+// of the blog. This prevents users from editing/deleting blogs that they didn't write 
+function checkBlogOwnership(req, res, next) {
+    Blog.findById(req.params.blogID, function(err, foundBlog) {
+        if (err) {
+            console.log(err);
+        } else {
+            // Can't directly use '==' to compare IDs because req.user._id is a string and
+            // foundBlog.author.id is a Mongoose ObjectID
+            if (foundBlog.author.id.equals(req.user._id)) {
+                // User is authorised to make changes to this blog
+                // Calling next to proceed with the next operation along the middleware stack
+                next();
+            } else {
+                res.redirect("back");
+            }
+        }
+    });
+}
+
 // RESTful Routes: |  Index |  New  |  Create  |  Show  |  Edit  |  Update  |  Destroy  | 
 //                 |   GET  |  GET  |   POST   |  GET   |  GET   |   PUT    |   DELETE  |
 // ===== RESTful Blog Index (GET) =====
@@ -50,7 +70,10 @@ router.post("/", isLoggedIn, function(req, res) {
     req.body.blog.content = req.sanitize(req.body.blog.content);
     Blog.create({
         title: req.body.blog.title,
-        author: req.body.blog.author,
+        author: {
+            id: req.user._id,
+            username: req.user.username
+        },
         image: req.body.blog.image,
         content: req.body.blog.content
     }, function(err, newBlogPost) {
@@ -60,7 +83,7 @@ router.post("/", isLoggedIn, function(req, res) {
             console.log(newBlogPost);
         }
     });
-    res.redirect("/");
+    res.redirect("/blogs");
 });
 
 // ===== RESTful Blog Show (GET) ===== 
@@ -83,10 +106,10 @@ router.get("/:blogID", function(req, res) {
 
 // ===== RESTful Blog Edit (GET) =====
 // Show an edit form for a specific blog document identified by blogID
-router.get("/:blogID/edit", function(req, res) {
+router.get("/:blogID/edit", isLoggedIn, checkBlogOwnership, function(req, res) {
     // The existing blog must be retrieved so that the edit form shows the
     // current data
-    Blog.findById({_id: req.params.blogID}, function(err, foundBlog) {
+    Blog.findById(req.params.blogID, function(err, foundBlog) {
         if (err) {
             res.send("Error");
         } else {
@@ -97,11 +120,12 @@ router.get("/:blogID/edit", function(req, res) {
     });
 });
 
-// ===== RESTful Blog Edit (PUT) =====
+// ===== RESTful Blog Update (PUT) =====
 // Update the blog document in the database with the submitted modifications 
-router.put("/:blogID", function(req, res) {
+router.put("/:blogID", isLoggedIn, checkBlogOwnership, function(req, res) {
     req.body.blog.content = req.sanitize(req.body.blog.content);
-    Blog.findOneAndUpdate({_id: req.params.blogID}, req.body.blog, function(err, updatedBlog) {
+    // req.body.blog is an object containing the modified fields: title, image, content
+    Blog.findByIdAndUpdate(req.params.blogID, req.body.blog, function(err, updatedBlog) {
         if (err) {
             console.log(err);
         } else {
@@ -112,13 +136,22 @@ router.put("/:blogID", function(req, res) {
 
 // ===== RESTful Blog Destroy (DELETE) =====
 // Delete a specific blog document from the database, identified by blogID
-router.delete("/:blogID", function(req, res) {
-    Blog.deleteOne({_id: req.params.blogID}, function(err) {
+router.delete("/:blogID", isLoggedIn, checkBlogOwnership, function(req, res) {
+    Blog.findByIdAndRemove(req.params.blogID, function(err, removedBlog) {
         if (err) {
             console.log(err);
+        } else {
+            // Also delete all comments attached to the blog
+            Comment.deleteMany({_id: {$in: removedBlog.comments}}, function(err, deletedComments) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("===== Deleted Comments Summary =====")
+                console.log(deletedComments);
+                res.redirect("/blogs");
+            })
         }
     });
-    res.redirect("/blogs");
 });
 
 module.exports = router;

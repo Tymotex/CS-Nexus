@@ -1,120 +1,119 @@
 <%- include("../partials/header.ejs") %>
 
 <div class="blogMainBody">
-  <div id="showBlogContainer" class="ui stackable grid">
-    <div id="showBlogSidebar" class="four wide column">
-      <div class="blogContainer ui piled segment">
-        <h1>About <%= blog.author %></h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo repellat magnam, modi vitae deserunt eos porro dolorem necessitatibus quos eius accusantium culpa aspernatur? Placeat repellat error nihil unde voluptatem quos.</p>
-      </div>
-      <div class="ui segments">
-        <div class="ui segment">More</div>
-        <div class="ui segment">Content</div>
-        <div class="ui segment">Goes</div>
-        <div class="ui segment">Here</div>
-      </div>
-    </div>
-    <div id="showBlogBody" class="twelve wide column">
-      <div id="viewBlogBody" class="blogContainer ui piled segment">
-        <h1 class="ui block header"><em><%= blog.title %></em></h1>
-        <img class="ui centered rounded medium image" src="<%= blog.image %>">
-        <div class="ui items">
-          <div class="item">
-            <div class="content">
-              <div class="description">
-                <p>
-                  <%- blog.content %>
-                </p>
-              </div>
-              <div class="extra">
-                  Written by: <%= blog.author %>
-              </div>
-              <div class="extra">
-                  Time posted: <%= moment(blog.timeCreated).format("LLLL ") %>
-              </div>
-              <br>
-              <% if (currentUser) { %>
-              <div>
-                <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
-                  <a class="ui positive large button" href="/blogs/<%= blog._id %>/edit">Edit post</a>
-                  <button class="ui large negative button">Delete Post</button>
-                </form>
-              </div>
-              <% } %>
-              
-              <!-- COMMENTS SECTION -->
-              <div class="ui horizontal divider">
-                Comments
-              </div>
-  
-              <div class="ui comments">
-                <h3 class="ui header">Comments</h3>
-                <% for (let i = 0; i < blog.comments.length; i++) { %>
-                  <div class="comment">
-                    <a class="avatar"><img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png"></a>
-                    <div class="content">
-                      <a class="author"><%= blog.comments[i].author.username %></a>
-                      <div class="metadata">
-                        <span class="date"><%= moment(blog.comments[i].timeCreated).format("DD-MM-YYYY LT") %></span>
-                      </div>
-                      <div class="text">
-                        <%= blog.comments[i].text %>
-                      </div>
-                      <div class="actions">
-                        <a class="reply">Reply</a>
-                      </div>
-                    </div>
-                  </div>
-                <% } %>
-    
-                <div class="comment">
-                  <a class="avatar">
-                    <img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png">
-                  </a>
-                  <div class="content">
-                    <a class="author">Elliot Fu</a>
-                    <div class="metadata">
-                      <span class="date">Yesterday at 12:30AM</span>
-                    </div>
-                    <div class="text">
-                      <p>This has been very useful for my research. Thanks as well!</p>
-                    </div>
-                    <div class="actions">
-                      <a class="reply">Reply</a>
-                    </div>
-                  </div>
-    
-                  <div class="comments">
-                    <div class="comment">
-                      <a class="avatar">
-                        <img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png">
-                      </a>
-                      <div class="content">
-                        <a class="author">Jenny Hess</a>
-                        <div class="metadata">
-                          <span class="date">Just now</span>
-                        </div>
-                        <div class="text">
-                          Elliot you are always so right :)
-                        </div>
-                        <div class="actions">
-                          <a class="reply">Reply</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <br>
-                <div class="ui black button">
-                  <a href="/blogs/<%= blog._id %>/comments/new"><i class="icon edit"></i> Add Comment</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div id="showBlogContainer" class="ui stackable grid">
+		<div id="showBlogSidebar" class="four wide column">
+			<div class="blogContainer ui piled segment">
+				<h1>About <%= blog.author.username %></h1>
+				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo repellat magnam, modi vitae deserunt eos porro dolorem necessitatibus quos eius accusantium culpa aspernatur? Placeat repellat error nihil unde voluptatem quos.</p>
+			</div>
+			<div class="ui segments">
+				<div class="ui segment">More</div>
+				<div class="ui segment">Content</div>
+				<div class="ui segment">Goes</div>
+				<div class="ui segment">Here</div>
+			</div>
+		</div>
+		<div id="showBlogBody" class="twelve wide column">
+			<div id="viewBlogBody" class="blogContainer ui piled segment">
+				<h1 class="ui block header"><em><%= blog.title %></em></h1>
+				<img class="ui centered rounded medium image" src="<%= blog.image %>">
+				<div class="ui items">
+				<div class="item">
+					<div class="content">
+					<div class="description">
+						<p><%- blog.content %></p>
+					</div>
+					<div class="extra">
+						<strong>Written by: <%= blog.author.username %></strong>
+					</div>
+					<div class="extra">
+						<strong>Time posted: <%= moment(blog.timeCreated).format("DD-MM-YYYY, LT") %></strong>
+					</div>
+					<br>
+					<% if (currentUser && blog.author.id.equals(currentUser._id)) { %>
+					<div>
+						<a class="ui positive small button" href="/blogs/<%= blog._id %>/edit">Edit post</a>
+						<!-- Need to use a form with _method=DELETE in order to override the POST method -->
+						<form id="delete-form-button" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+							<button class="ui small negative button">Delete Post</button>
+						</form>
+					</div>
+					<% } %>
+					
+					<!-- COMMENTS SECTION -->
+					<div class="ui horizontal divider">
+						Comments
+					</div>
+		
+					<div class="ui comments">
+						<h3 class="ui header">Comments</h3>
+						<% for (let i = 0; i < blog.comments.length; i++) { %>
+						<div class="comment">
+							<a class="avatar"><img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png"></a>
+							<div class="content">
+								<a class="author"><%= blog.comments[i].author.username %></a>
+								<div class="metadata">
+									<span class="date"><%= moment(blog.comments[i].timeCreated).format("DD-MM-YYYY LT") %></span>
+								</div>
+								<div class="text">
+									<%= blog.comments[i].text %>
+								</div>
+								<div class="actions">
+									<a class="reply">Reply</a>
+								</div>
+							</div>
+						</div>
+						<% } %>
+			
+						<div class="comment">
+						<a class="avatar">
+							<img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png">
+						</a>
+						<div class="content">
+							<a class="author">Elliot Fu</a>
+							<div class="metadata">
+							<span class="date">Yesterday at 12:30AM</span>
+							</div>
+							<div class="text">
+							<p>This has been very useful for my research. Thanks as well!</p>
+							</div>
+							<div class="actions">
+							<a class="reply">Reply</a>
+							</div>
+						</div>
+			
+						<div class="comments">
+							<div class="comment">
+							<a class="avatar">
+								<img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png">
+							</a>
+							<div class="content">
+								<a class="author">Jenny Hess</a>
+								<div class="metadata">
+								<span class="date">Just now</span>
+								</div>
+								<div class="text">
+								Elliot you are always so right :)
+								</div>
+								<div class="actions">
+								<a class="reply">Reply</a>
+								</div>
+							</div>
+							</div>
+						</div>
+						</div>
+						<br>
+						<div class="ui black button">
+						<a href="/blogs/<%= blog._id %>/comments/new"><i class="icon edit"></i> Add Comment</a>
+						</div>
+					</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

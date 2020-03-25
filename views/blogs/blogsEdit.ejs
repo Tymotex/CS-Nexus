@@ -1,32 +1,28 @@
 <%- include("../partials/header.ejs") %>
 
-<div class="blogContainer ui piled segment">
-    <h1>Edit Blog Post</h1>
-    <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
-        
-        <div class="ui form segment">    
-            <div class="field">
-                <label>Title</label>
-                <input class="newBlogInputs" type="text" name="blog[title]" placeholder="Title" value="<%= blog.title %>" required>
-            </div>
-            <div class="field">
-                <label>Author</label>
-                <input class="newBlogInputs" type="text" name="blog[author]" placeholder="Author" value="<%= blog.author %>" required>
-            </div>
-            <div class="field">
-                <label>Image URL</label>
-                <input class="newBlogInputs" type="text" name="blog[image]" placeholder="Image URL" value="<%= blog.image %>">
-            </div>
-            <div class="field">
-                <label>Text Area</label>
-                <textarea name="blog[content]" value="<%= blog.content %>" required><%= blog.content %></textarea>
-            </div>
-            <button class="ui primary button">Save Changes</button>
-            <a class="ui button" href="/blogs">Return</a>
-          </div>
-    </form>
-
-    
+<div class="blogMainBody">
+    <div id="viewBlogContainer" class="blogContainer ui piled segment">
+        <div class="blogContainer ui piled segment">
+            <h1>Edit Blog Post</h1>
+            <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+                <div class="ui form segment">    
+                    <div class="field">
+                        <label>Title</label>
+                        <input class="newBlogInputs" type="text" name="blog[title]" placeholder="Title" value="<%= blog.title %>" required>
+                    </div>
+                    <div class="field">
+                        <label>Image URL</label>
+                        <input class="newBlogInputs" type="text" name="blog[image]" placeholder="Image URL" value="<%= blog.image %>">
+                    </div>
+                    <div class="field">
+                        <label>Text Area</label>
+                        <textarea name="blog[content]" value="<%= blog.content %>" required><%= blog.content %></textarea>
+                    </div>
+                    <button class="ui primary button">Save Changes</button>
+                    <a class="ui button" href="/blogs/<%= blog._id %>">Return</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-
 <%- include("../partials/footer.ejs") %>

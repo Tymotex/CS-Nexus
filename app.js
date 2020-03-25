@@ -27,6 +27,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 mongoose.connect("mongodb://localhost:27017/Blog", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+// Method-override lets us make PUT or DELETE requests instead of POST requests for forms. 
+// Eg. The blogEdit page has this form tag: <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST"></form>
 app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 app.use(multer({dest: "./public/uploads/"}).single("photo"));
@@ -44,8 +46,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Middleware Functions:
-// Makes req.user available as the 'currentUser' variable inside ejs templates
+
 app.use(function(req, res, next) {
+    // Makes req.user available as the 'currentUser' variable inside all ejs templates
     res.locals.currentUser = req.user;  
     // This middleware function calls next() in order to progress to the next function in the middleware stack
     next();  
