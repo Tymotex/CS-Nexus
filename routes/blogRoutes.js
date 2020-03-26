@@ -1,43 +1,14 @@
+// Packages:
 const express = require("express"),
-      router = express.Router(),
       passport = require("passport"),
-      moment = require("moment"),
-      Blog = require("../models/blog"),
+      moment = require("moment");
+// Models and middleware:
+const Blog = require("../models/blog"),
       Comment = require("../models/comment"),
-      User = require("../models/user");
+      User = require("../models/user"),
+      authMiddleware = require("../middleware")
 
-// ===== Middleware Helper Functions =====
-// Note that route handlers app.get, app.post, etc. can be given multiple callback functions
-// that behave like middleware to handle a request
-
-// Checks if a user is authenticated
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    } else {
-        res.redirect("/login");
-    }
-}
-
-// Checks if the user is authorised, ie. that their _id is the same as the _id of the author
-// of the blog. This prevents users from editing/deleting blogs that they didn't write 
-function checkBlogOwnership(req, res, next) {
-    Blog.findById(req.params.blogID, function(err, foundBlog) {
-        if (err) {
-            console.log(err);
-        } else {
-            // Can't directly use '==' to compare IDs because req.user._id is a string and
-            // foundBlog.author.id is a Mongoose ObjectID
-            if (foundBlog.author.id.equals(req.user._id)) {
-                // User is authorised to make changes to this blog
-                // Calling next to proceed with the next operation along the middleware stack
-                next();
-            } else {
-                res.redirect("back");
-            }
-        }
-    });
-}
+const router = express.Router();
 
 // RESTful Routes: |  Index |  New  |  Create  |  Show  |  Edit  |  Update  |  Destroy  | 
 //                 |   GET  |  GET  |   POST   |  GET   |  GET   |   PUT    |   DELETE  |
@@ -58,14 +29,14 @@ router.get("/", function(req, res) {
 
 // ===== RESTful Blog New (GET) =====
 // 'New' shows the form for creating a new blog
-router.get("/new", isLoggedIn, function(req, res) {
+router.get("/new", authMiddleware.isLoggedIn, function(req, res) {
     res.render("blogs/blogsNew");
 });
 
 // ===== RESTful Blog Create (POST) ===== 
 // Create a new blog document from submitted form data (accessed in req.body)
 // thanks to 'body-parser' 
-router.post("/", isLoggedIn, function(req, res) {
+router.post("/", authMiddleware.isLoggedIn, function(req, res) {
     // 'express-sanitizer' filters out malicious raw code in the newly created blog
     req.body.blog.content = req.sanitize(req.body.blog.content);
     Blog.create({
@@ -106,7 +77,7 @@ router.get("/:blogID", function(req, res) {
 
 // ===== RESTful Blog Edit (GET) =====
 // Show an edit form for a specific blog document identified by blogID
-router.get("/:blogID/edit", isLoggedIn, checkBlogOwnership, function(req, res) {
+router.get("/:blogID/edit", authMiddleware.isLoggedIn, authMiddleware.checkBlogOwnership, function(req, res) {
     // The existing blog must be retrieved so that the edit form shows the
     // current data
     Blog.findById(req.params.blogID, function(err, foundBlog) {
@@ -122,7 +93,7 @@ router.get("/:blogID/edit", isLoggedIn, checkBlogOwnership, function(req, res) {
 
 // ===== RESTful Blog Update (PUT) =====
 // Update the blog document in the database with the submitted modifications 
-router.put("/:blogID", isLoggedIn, checkBlogOwnership, function(req, res) {
+router.put("/:blogID", authMiddleware.isLoggedIn, authMiddleware.checkBlogOwnership, function(req, res) {
     req.body.blog.content = req.sanitize(req.body.blog.content);
     // req.body.blog is an object containing the modified fields: title, image, content
     Blog.findByIdAndUpdate(req.params.blogID, req.body.blog, function(err, updatedBlog) {
@@ -136,7 +107,7 @@ router.put("/:blogID", isLoggedIn, checkBlogOwnership, function(req, res) {
 
 // ===== RESTful Blog Destroy (DELETE) =====
 // Delete a specific blog document from the database, identified by blogID
-router.delete("/:blogID", isLoggedIn, checkBlogOwnership, function(req, res) {
+router.delete("/:blogID", authMiddleware.isLoggedIn, authMiddleware.checkBlogOwnership, function(req, res) {
     Blog.findByIdAndRemove(req.params.blogID, function(err, removedBlog) {
         if (err) {
             console.log(err);

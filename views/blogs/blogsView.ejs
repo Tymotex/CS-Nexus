@@ -63,46 +63,56 @@
 									<a class="reply">Reply</a>
 								</div>
 							</div>
+
+							<% if (currentUser && blog.comments[i].author.id.equals(currentUser._id)) { %>
+								<div>
+									<a class="ui positive small button" href="/blogs/<%= blog._id %>/comments/<%= blog.comments[i]._id %>/edit">Edit Comment</a>
+									<!-- Need to use a form with _method=DELETE in order to override the POST method -->
+									<form id="delete-form-button" action="/blogs/<%= blog._id %>/comments/<%= blog.comments[i]._id %>?_method=DELETE" method="POST">
+										<button class="ui small negative button">Delete Post</button>
+									</form>
+								</div>
+							<% } %>
 						</div>
 						<% } %>
 			
-						<div class="comment">
-						<a class="avatar">
-							<img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png">
-						</a>
-						<div class="content">
-							<a class="author">Elliot Fu</a>
-							<div class="metadata">
-							<span class="date">Yesterday at 12:30AM</span>
-							</div>
-							<div class="text">
-							<p>This has been very useful for my research. Thanks as well!</p>
-							</div>
-							<div class="actions">
-							<a class="reply">Reply</a>
-							</div>
-						</div>
-			
-						<div class="comments">
-							<div class="comment">
+						<!-- <div class="comment">
 							<a class="avatar">
 								<img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png">
 							</a>
 							<div class="content">
-								<a class="author">Jenny Hess</a>
+								<a class="author">Elliot Fu</a>
 								<div class="metadata">
-								<span class="date">Just now</span>
+								<span class="date">Yesterday at 12:30AM</span>
 								</div>
 								<div class="text">
-								Elliot you are always so right :)
+								<p>This has been very useful for my research. Thanks as well!</p>
 								</div>
 								<div class="actions">
 								<a class="reply">Reply</a>
 								</div>
 							</div>
+			
+							<div class="comments">
+								<div class="comment">
+								<a class="avatar">
+									<img src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png">
+								</a>
+								<div class="content">
+									<a class="author">Jenny Hess</a>
+									<div class="metadata">
+									<span class="date">Just now</span>
+									</div>
+									<div class="text">
+									Elliot you are always so right :)
+									</div>
+									<div class="actions">
+									<a class="reply">Reply</a>
+									</div>
+								</div>
+								</div>
 							</div>
-						</div>
-						</div>
+						</div> -->
 						<br>
 						<div class="ui black button">
 						<a href="/blogs/<%= blog._id %>/comments/new"><i class="icon edit"></i> Add Comment</a>

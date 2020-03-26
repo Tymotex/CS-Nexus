@@ -1,13 +1,15 @@
+// Packages:
 const express = require("express"),
       passport = require("passport"),
       moment = require("moment"),
-      Blog = require("../models/blog"),
+      fs = require("fs");
+// Models and middleware:
+const Blog = require("../models/blog"),
       Comment = require("../models/comment"),
       User = require("../models/user"),
       PlantData = require("../models/plantdata"),
-      fs = require("fs");
+      authMiddleware = require("../middleware");
 
-// TODO: Should I have router = express.Route({ mergeParams: true })?
 const router = express.Router({
     mergeParams: true
 });

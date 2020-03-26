@@ -1,31 +1,21 @@
+// Packages:
 const express = require("express"),
       passport = require("passport"),
-      moment = require("moment"),
-      Blog = require("../models/blog"),
+      moment = require("moment");
+// Models and middleware:
+const Blog = require("../models/blog"),
       Comment = require("../models/comment"),
-      User = require("../models/user");
+      User = require("../models/user"),
+      authMiddleware = require("../middleware")
 
 const router = express.Router({
     mergeParams: true
 });
 
-// ===== Middleware Helper Functions =====
-// Note that route handlers app.get, app.post, etc. can be given multiple callback functions
-// that behave like middleware to handle a request
-
-// Checks if a user is authenticated
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    } else {
-        res.redirect("/login");
-    }
-}
-
 // RESTful Routes: |  Index |  New  |  Create  |  Show  |  Edit  |  Update  |  Destroy  | 
 //                 |   GET  |  GET  |   POST   |  GET   |  GET   |   PUT    |   DELETE  |
 // ===== RESTful Comment New (GET) =====
-router.get("/new", isLoggedIn, function(req, res) {
+router.get("/new", authMiddleware.isLoggedIn, function(req, res) {
     Blog.findById({_id: req.params.blogID}, function(err, foundBlog) {
         if (err) {
             console.log(err);
@@ -38,16 +28,22 @@ router.get("/new", isLoggedIn, function(req, res) {
 });
 
 // ===== RESTful Comment Create (POST) =====
-router.post("/", isLoggedIn, function(req, res) {
+// Note that blogID exists under req.params because all comment routes extend of
+// the route: /blogs/:blogID/comments/...
+router.post("/", authMiddleware.isLoggedIn, function(req, res) {
     Blog.findById({_id: req.params.blogID}, function(err, foundBlog) {
         if (err) {
             console.log(err);
         } else {
-            Comment.create(req.body.comment, function(err, createdComment) {
+            Comment.create({
+                text: req.body.comment.text,
+                author: {
+                    id: req.user._id,
+                    username: req.user.username
+                } 
+                // TODO: Update time created to the new modified time?
+            }, function(err, createdComment) {
                 // Set the author of this new comment as the username of the currently active user
-                createdComment.author._id = req.user._id
-                createdComment.author.username = req.user.username
-                createdComment.save()
                 // Attach the comment to the blog document
                 foundBlog.comments.push(createdComment);
                 foundBlog.save();
@@ -56,7 +52,43 @@ router.post("/", isLoggedIn, function(req, res) {
             });
         }
     });
-})
+});
 
+// ===== RESTful Comment Edit (GET) =====
+router.get("/:commentID/edit", authMiddleware.isLoggedIn, authMiddleware.checkCommentOwnership, function(req, res) {
+    Comment.findById(req.params.commentID, function(err, foundComment) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("comments/commentsEdit", {
+                comment: foundComment,
+                blogID: req.params.blogID
+            });
+        }
+    });
+});
+
+// ===== RESTful Comment Update (PUT) =====
+router.put("/:commentID/", authMiddleware.isLoggedIn, authMiddleware.checkCommentOwnership, function(req, res) {
+    req.body.comment.text = req.sanitize(req.body.comment.text);
+    Comment.findByIdAndUpdate(req.params.commentID, req.body.comment, function(err, updatedComment) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/blogs/" + req.params.blogID);
+        }
+    });
+});
+
+// ===== RESTful Comment Destroy (DELETE) ===== 
+router.delete("/:commentID/", authMiddleware.isLoggedIn, authMiddleware.checkCommentOwnership, function(req, res) {
+    Comment.findByIdAndRemove(req.params.commentID, function(err, removedComment) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/blogs/" + req.params.blogID);
+        }
+    });
+});
 
 module.exports = router;
