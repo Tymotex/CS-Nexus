@@ -14,7 +14,7 @@ const router = express.Router();
 // ===== RESTful Index (GET) =====
 // Show the main landing page
 router.get("/", function(req, res) {
-    res.render("home");
+    res.render("landing");
 });
 
 // ===== Authentication - Registration (GET) =====
