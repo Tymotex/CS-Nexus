@@ -1,6 +1,5 @@
 # CS-Nexus [WIP]
-Built with Semantic UI, jQuery, Node.js, Express, MongoDB with Mongoose and Passport.js for authentication.
-The front-end is being overhauled with Bootstrap 4. Check out the bootstrap-overhaul branch.
+Built with Bootstrap 4, jQuery, Node.js, Express, MongoDB with Mongoose and Passport.js for authentication.
 
 ### Planned Features:
 - Set up OAuth tokens with passport.js
