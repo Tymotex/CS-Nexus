@@ -1,33 +1,29 @@
 <%- include("../partials/header.ejs") %>
 
-<div class="blogMainBody">
-    <div id="viewBlogContainer" class="blogContainer ui piled segment">
-        <h1 class="ui center aligned icon header">
-            <i id="bigHeaderIcon" class="circular tree icon"></i>
-            Hydroponix Data
-        </h1>
-        <div class="ui section divider"></div>
-
-        <form action="/hydroponix" enctype='multipart/form-data' method="POST">
-            <div class="ui form segment">    
-                <div class="field">
-                    <label>Title</label>
-                    <input class="newBlogInputs" type="text" name="title" placeholder="Title" required>
-                </div>
-                <div class="field">
-                    <label>Content</label>
-                    <input class="newBlogInputs" type="text" name="content" placeholder="Content" required>
-                </div>
-                <div class="field">
-                    <label>Image</label>
-                    <input class="newBlogInputs" type="file" name="photo">
-                </div>
-                <button class="ui primary button">Submit</button>
-                <a class="ui button" href="/hydroponix">Return</a>
+<div class="main-container container">
+    <h1>
+        Hydroponix Data
+    </h1>
+    <form action="/hydroponix" enctype='multipart/form-data' method="POST">
+        <div class="ui form segment">    
+            <div class="field">
+                <label>Title</label>
+                <input class="newBlogInputs" type="text" name="title" placeholder="Title" required>
             </div>
-        </form>
-    </div>
+            <div class="field">
+                <label>Content</label>
+                <input class="newBlogInputs" type="text" name="content" placeholder="Content" required>
+            </div>
+            <div class="field">
+                <label>Image</label>
+                <input class="newBlogInputs" type="file" name="photo">
+            </div>
+            <button class="ui primary button">Submit</button>
+            <a class="ui button" href="/hydroponix">Return</a>
+        </div>
+    </form>
 </div>
+        
 
 
 <%- include("../partials/footer.ejs") %>

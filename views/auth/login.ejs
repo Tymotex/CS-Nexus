@@ -1,25 +1,40 @@
-<%- include("../partials/header.ejs") %>
+<%- include("../partials/authHeader.ejs") %>
 
-<div class="blogMainBody">
-    <div id="viewBlogContainer" class="blogContainer ui piled segment">
-        <h1 class="ui center aligned icon header">
-            <i id="bigHeaderIcon" class="circular coffee icon"></i>
-            Log In
-        </h1>
-        <div class="ui section divider"></div>
-
-        <form class="ui form" action="/login" method="POST">
-            <div class="field">
-              <label>Username</label>
-              <input type="text" name="username" placeholder="Username">
-            </div>
-            <div class="field">
-              <label>Password</label>
-              <input type="password" name="password" placeholder="Password">
-            </div>
-            <button class="ui button" type="submit">Login</button>
-          </form>
+<div class="container-fluid">
+    <div class="row no-gutter">
+		<div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+		<div class="col-md-8 col-lg-6">
+			<div class="login d-flex align-items-center py-5">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-9 col-lg-8 mx-auto">
+							<h3 class="login-heading mb-4">Welcome back!</h3>
+							<form action="/login" method="POST">
+								<div class="form-label-group">
+									<input id="input-username" class="form-control" type="text" name="username" placeholder="Username" autofocus>
+									<label for="input-username">Username</label>
+								</div>
+								<div class="form-label-group">
+									<input id="input-password" class="form-control" type="password" name="password" placeholder="Password" required>
+									<label for="input-password">Password</label>
+								</div>
+								<!-- TODO: Remember password unimplemented? -->
+								<div class="custom-control custom-checkbox mb-3">
+									<input type="checkbox" class="custom-control-input" id="customCheck1">
+									<label class="custom-control-label" for="customCheck1">Remember password</label>
+								</div>
+								<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+								<!-- TODO: Forgot password unimplemented? -->
+								<div class="text-center">
+									<a class="small" href="#">Forgot password?</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>  
+		</div>
     </div>
 </div>
 
-<%- include("../partials/footer.ejs") %>
+<%- include("../partials/authFooter.ejs") %>

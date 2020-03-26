@@ -1,40 +1,57 @@
 <%- include("../partials/header.ejs") %>
 
-<div class="blogMainBody">
-    <div id="viewBlogContainer" class="blogContainer ui piled segment">
-        <h1 class="ui center aligned icon header">
-            <i id="bigHeaderIcon" class="circular tree icon"></i>
-            Hydroponix Data Snapshots
-        </h1>
-        <h3 class="ui center aligned icon header">
-            See all the data snapshots from the automated greenhouse here! 
-        </h3>
+ 
+        
 
-        <div class="ui section divider"></div>
+<div class="main-container wider-container container">
+    <div class="center-children"> 
+        <h1 class="main-header">Hydroponix Data Snapshots</h1> 
+        <h1 class="main-header"><i class="fa fa-tree"></i></h1>
+        <h5><a href="https://github.com/Tymotex/Hydroponix">View project on GitHub</a></h5>
+        <h3>See all the data snapshots from the Hydroponix below!</h3> 
+        <hr class="divider">
+    </div>        
+
+    <!-- Nested bootstrap grid -->
+    <div class="row">
         <% for (let i = 0; i < plantData.length; i++) { %>      
-              
-            <div class="ui items">
-                <div class="item">
-                    <div class="image">
-                        <img class="ui medium rounded image" src="<%= '../' + plantData[i].imgPath %>"href="<%= '/hydroponix/' + plantData[i]._id %>">
-                    </div>   <!-- NOTE: THE ../ WAS ADDED TO CORRECT THE IMAGE PATH -->
-                    <div class="content"><a class="header" href="<%= '/hydroponix/' + plantData[i]._id %>"><%= plantData[i].title %></a>
-                        <div class="description">
-                            <p>
-                                <%- plantData[i].content %>
-                            </p>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                <div class="card" style="width: 19rem;">
+                    <a href="<%= '/hydroponix/' + plantData[i]._id %>">
+                        <img class="card-img-top" src="<%= '../' + plantData[i].imgPath %>">
+                    </a>
+                    <div class="card-body">
+                        <div class="center-children">
+                            <a href="<%= '/hydroponix/' + plantData[i]._id %>">
+                                <h3><%= plantData[i].title %></h3>
+                            </a>
                         </div>
-                        <div class="extra"><%= moment(plantData[i].timeCreated).format("MMMM Do, YYYY, h:mm:ss A") %></div>
+                        <p class="card-text">
+                            <strong>Summary: </strong><%- plantData[i].content.substring(0, 300) %>... <a href="<%= '/hydroponix/' + plantData[i]._id %>">Read more</a>
+                        </p>
+                        <p class="card-text">
+                            <strong>Time: </strong> <%= moment(plantData[i].timeCreated).tz('Australia/Sydney').format("MMMM Do, YYYY, h:mm:ss A") %>
+                        </p>
+                        <!-- <div class="center-children">
+                            <a href="<%= '/hydroponix/' + plantData[i]._id %>" class="btn btn-primary">View Details</a>
+                        </div> -->
                     </div>
                 </div>
+                <hr>
             </div>
         <% } %>
-
-        <div>
-            <!-- <a class="ui primary button" href="/hydroponix/new">New</a> -->
-        </div>
     </div>
+    <!-- Pagination for my snapshots -->
+    <ul class="pagination justify-content-center mb-4">
+        <li class="page-item">
+            <a class="page-link" href="#">&larr; Newer</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="#"> Older&rarr;</a>
+        </li>
+    </ul>
 </div>
+
 
 
 <%- include("../partials/footer.ejs") %>

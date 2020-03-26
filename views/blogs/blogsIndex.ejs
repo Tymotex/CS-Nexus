@@ -1,6 +1,6 @@
 <%- include("../partials/header.ejs") %>
 
-<div class="main-container container">
+<div class="main-container wider-container container">
     <div class="row">
         <div class="col-md-8">
             <h1 class="main-header">Computer Science Blogs</h1>  
@@ -17,7 +17,7 @@
                                 </a>
                                 <hr class="divider inverted">
                                 <p class="card-text">
-                                    <%- blogs[i].content.substring(0, 200) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
+                                    <%- blogs[i].content.substring(0, 300) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
                                 </p>
                             </div>
                         </div>
@@ -26,77 +26,75 @@
                         <strong>
                             Author: <%= blogs[i].author.username %>
                             <br>
-                            Time posted: <%= moment(blogs[i].timeCreated).format("DD-MM-YYYY") %>
+                            Time posted: <%= moment(blogs[i].timeCreated).tz('Australia/Sydney').format("DD-MM-YYYY") %>
                         </strong>
                     </div>
                 </div> 
             <% } %>   
             <!-- Pagination for my blogs -->
             <ul class="pagination justify-content-center mb-4">
-                <li class="page-item">
-                    <a class="page-link" href="#">&larr; Older</a>
-                </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Newer &rarr;</a>
-                </li>
-            </ul>
+				<li class="page-item">
+					<a class="page-link" href="#">&larr; Newer</a>
+				</li>
+				<li class="page-item disabled">
+					<a class="page-link" href="#"> Older&rarr;</a>
+				</li>
+			</ul>
         </div>
         <div class="col-md-4">
             <!-- Search Widget -->
             <div class="card my-4">
-              <h5 class="card-header">Search</h5>
-              <div class="card-body">
-                <div class="input-group">
-                  <textarea class="form-control non-resizeable" type="text" placeholder="Search for..."></textarea>
-                  <span class="input-group-btn">
-                    <button class="btn btn-sm btn-secondary" type="button">Go!</button>
-                  </span>
-                </div>
-              </div>
+				<h5 class="card-header">Search</h5>
+				<div class="card-body">
+					<div class="input-group">
+					<textarea class="form-control non-resizeable" type="text" placeholder="Search for..."></textarea>
+					<span class="input-group-btn">
+						<button class="btn btn-sm btn-secondary" type="button">Go!</button>
+					</span>
+					</div>
+				</div>
             </div>
             <!-- Categories Widget -->
             <div class="card my-4">
-              <h5 class="card-header">Categories</h5>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                      <li>
-                        <a href="#">HTML</a>
-                      </li>
-                      <li>
-                        <a href="#">CSS</a>
-                      </li>
-                      <li>
-                        <a href="#">JavaScript</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                      <li>
-                        <a href="#">C#</a>
-                      </li>
-                      <li>
-                        <a href="#">Python</a>
-                      </li>
-                      <li>
-                        <a href="#">Game Dev</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+				<h5 class="card-header">Categories</h5>
+				<div class="card-body">
+					<div class="row">
+					<div class="col-lg-6">
+						<ul class="list-unstyled mb-0">
+						<li>
+							<a href="#">HTML</a>
+						</li>
+						<li>
+							<a href="#">CSS</a>
+						</li>
+						<li>
+							<a href="#">JavaScript</a>
+						</li>
+						</ul>
+					</div>
+					<div class="col-lg-6">
+						<ul class="list-unstyled mb-0">
+						<li>
+							<a href="#">C#</a>
+						</li>
+						<li>
+							<a href="#">Python</a>
+						</li>
+						<li>
+							<a href="#">Game Dev</a>
+						</li>
+						</ul>
+					</div>
+					</div>
+				</div>
             </div>
-    
             <!-- Side Widget -->
             <div class="card my-4">
-              <h5 class="card-header">Another Widget</h5>
-              <div class="card-body">
-                Something else here! 
-              </div>
+				<div class="card-body">
+					<a class="btn btn-secondary center-element" href="/blogs/new">Create a new blog</a> 
+				</div>
             </div>
-          </div>
+        </div>
     </div> 
 </div>
 

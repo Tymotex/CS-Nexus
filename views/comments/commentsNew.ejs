@@ -1,21 +1,27 @@
 <%- include("../partials/header.ejs") %>
-<div class="blogMainBody">
-    <div id="viewBlogContainer" class="blogContainer ui piled segment">
-        <div class="blogMainBody">
-            <div id="viewBlogContainer" class="blogContainer ui piled segment">
-                <h1>Add a New Comment On "<%= blog.title %>"</h1>
-                <form action="/blogs/<%= blog._id %>/comments" method="POST">
-                    <div class="ui form segment">
-                        <div class="field">
-                            <label>Comment</label>
-                            <textarea name="comment[text]" placeholder="Comment" required></textarea>
-                        </div>
-                        <button class="ui primary button">Submit</button>
-                        <a class="ui button" href="/blogs/<%= blog._id %>">Return</a>
-                    </div>
-                </form>
+
+
+<div class="main-container container">
+    <div class="center-children">
+        <h1>Add a New Comment On:</h1>
+        <br>
+        <strong><h1>"<%= blog.title %>"</h1></strong>
+    </div>
+    <hr class="divider">
+    <form action="/blogs/<%= blog._id %>/comments" method="POST">
+        <div class="ui form segment">
+            <div class="form-label-group">
+                <label for="input-comment">Your Comment:</label>
+                <textarea id="input-comment" class="form-control" name="comment[text]" placeholder="Comment" required autofocus></textarea>
             </div>
         </div>
-    </div>
-</div>
+        <hr class="divider">
+        <div class="center-children">
+            <a class="btn btn-secondary centered-element" href="/blogs/<%= blog._id %>">Return</a>
+            <button class="btn btn-primary centered-element">Submit</button>
+        </div>
+    </form>
+</div> 
+
+
 <%- include("../partials/footer.ejs") %>

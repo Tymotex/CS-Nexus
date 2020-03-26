@@ -14,16 +14,18 @@
 			<strong>Written by: <%= blog.author.username %></strong>
 		</div>
 		<div class="extra">
-			<strong>Time posted: <%= moment(blog.timeCreated).format("DD-MM-YYYY, LT") %></strong>
+			<strong>Time posted: <%= moment(blog.timeCreated).tz('Australia/Sydney').format("DD-MM-YYYY, LT") %></strong>
 		</div>
 		<br>
 		<% if (currentUser && blog.author.id.equals(currentUser._id)) { %>
 		<div>
-			<a class="ui positive small button" href="/blogs/<%= blog._id %>/edit">Edit post</a>
-			<!-- Need to use a form with _method=DELETE in order to override the POST method -->
-			<form id="delete-form-button" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
-				<button class="ui small negative button">Delete Post</button>
-			</form>
+			<div class="center-children">
+				<!-- Need to use a form with _method=DELETE in order to override the POST method -->
+				<form id="delete-form-button" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+					<button class="btn btn-danger ui small negative button">Delete Post</button>
+					<a class="btn btn-primary ui positive small button" href="/blogs/<%= blog._id %>/edit">Edit post</a>
+				</form>
+			</div>
 		</div>
 		<% } %>
 		<!-- COMMENTS SECTION -->
@@ -35,29 +37,35 @@
 						<img class="user-avatar" src="https://www.pngitem.com/pimgs/m/78-786501_black-avatar-png-user-icon-png-transparent-png.png">
 					</a>
 					<div class="media-body">
-						<h4 class="media-heading user_name"><%= blog.comments[i].author.username %></h4>
+						<h4 class="media-heading user_name">
+							<%= blog.comments[i].author.username %>
+							<% if (currentUser && blog.comments[i].author.id.equals(currentUser._id)) { %>
+								<i class="fa fa-check-square"></i> <em>blog author</em>
+							<% } %>
+						</h4>
 						<%= blog.comments[i].text %>
 						<p><small>
-							Time posted: <%= moment(blog.comments[i].timeCreated).format("DD-MM-YYYY LT") %>
+							Time posted: <%= moment(blog.comments[i].timeCreated).tz('Australia/Sydney').format("DD-MM-YYYY LT") %>
 							<br>
 							<a href="">Like</a> - <a href="">Share</a>
 						</small></p>
+						<% if (currentUser && blog.comments[i].author.id.equals(currentUser._id)) { %>
+							<div>
+								<!-- Need to use a form with _method=DELETE in order to override the POST method -->
+								<form action="/blogs/<%= blog._id %>/comments/<%= blog.comments[i]._id %>?_method=DELETE" method="POST">
+									<a class="btn btn-primary btn-padded" href="/blogs/<%= blog._id %>/comments/<%= blog.comments[i]._id %>/edit">Edit Comment</a>
+									<button class="btn btn-danger btn-padded">Delete Comment</button>
+								</form>
+							</div>
+						<% } %>
 					</div>
 
-					<% if (currentUser && blog.comments[i].author.id.equals(currentUser._id)) { %>
-						<div>
-							<a class="btn" href="/blogs/<%= blog._id %>/comments/<%= blog.comments[i]._id %>/edit">Edit Comment</a>
-							<!-- Need to use a form with _method=DELETE in order to override the POST method -->
-							<form action="/blogs/<%= blog._id %>/comments/<%= blog.comments[i]._id %>?_method=DELETE" method="POST">
-								<button class="btn">Delete Post</button>
-							</form>
-						</div>
-					<% } %>
+					
 				</div>
 			<% } %>
 		</div>
-		<div>
-			<a href="/blogs/<%= blog._id %>/comments/new">Add Comment</a>
+		<div class="center-children">
+			<a class="btn btn-secondary" href="/blogs/<%= blog._id %>/comments/new">Add Comment</a>
 		</div>
 	</div>
 </div>

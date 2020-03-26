@@ -33,7 +33,7 @@ router.post("/register", function(req, res) {
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
             console.log(err);
-            return res.render("register");
+            return res.render("auth/register");
         } else {
             // Logging the user in after they sign up
             // authenticate() comes from 'passport-local-mongoose'

@@ -1,28 +1,30 @@
 <%- include("../partials/header.ejs") %>
 
-<div class="blogMainBody">
-    <div id="viewBlogContainer" class="blogContainer ui piled segment">
-        <div class="blogContainer ui piled segment">
-            <h1>Edit Blog Post</h1>
-            <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
-                <div class="ui form segment">    
-                    <div class="field">
-                        <label>Title</label>
-                        <input class="newBlogInputs" type="text" name="blog[title]" placeholder="Title" value="<%= blog.title %>" required>
-                    </div>
-                    <div class="field">
-                        <label>Image URL</label>
-                        <input class="newBlogInputs" type="text" name="blog[image]" placeholder="Image URL" value="<%= blog.image %>">
-                    </div>
-                    <div class="field">
-                        <label>Text Area</label>
-                        <textarea name="blog[content]" value="<%= blog.content %>" required><%= blog.content %></textarea>
-                    </div>
-                    <button class="ui primary button">Save Changes</button>
-                    <a class="ui button" href="/blogs/<%= blog._id %>">Return</a>
-                </div>
-            </form>
+
+
+
+<div class="main-container container">
+    <h1>Edit Blog Post</h1>
+    <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+    
+        <div class="form-label-group">
+            <label>Title</label>
+            <input id="input-title" class="form-control" type="text" name="blog[title]" placeholder="Title" value="<%= blog.title %>" required>
         </div>
-    </div>
+        <div class="form-label-group">
+            <label>Image URL</label>
+            <input id="input-image" class="form-control" type="text" name="blog[image]" placeholder="Image URL" value="<%= blog.image %>" required>
+        </div>
+        <div class="form-label-group">
+            <label>Text Area</label>
+            <textarea id="input-content" class="form-control" name="blog[content]" value="<%= blog.content %>" required autofocus><%= blog.content %></textarea>
+        </div>
+        <hr class="divider">
+        <div class="center-children">
+            <a class="btn btn-secondary centered-element" href="/blogs">Return</a>
+            <button class="btn btn-primary centered-element">Save Changes</button>
+        </div>
+    </form>
 </div>
+
 <%- include("../partials/footer.ejs") %>

@@ -22,6 +22,11 @@
 	padding: .9rem 0;
 }
 
+#mainNav .navbar-brand:hover {
+	color: rgba(255, 255, 255, 0.459);
+	border-radius: 30px;
+}
+
 #mainNav .navbar-nav .nav-item:hover {
 	color: fade(whitesmoke 80%);
 	outline: none;
@@ -31,6 +36,10 @@
 #mainNav .navbar-nav .nav-item:active, #mainNav .navbar-nav .nav-item:focus {
 	outline: none;
 	background-color: transparent;
+}
+
+.left-divider {
+	border-left: 1px solid gray;
 }
 
 @media (min-width: 992px) {
@@ -52,6 +61,8 @@
 	}
 	#mainNav .nav-link:hover {
 		color: rgba(255, 255, 255, 0.75);
+		background-color: rgba(255, 255, 255, 0.13);
+		border-radius: 30px;
 	}
 	#mainNav .nav-link:active {
 		color: white;
@@ -82,6 +93,28 @@
 }
 
 /* Landing page styles */
+.link-icon {
+	font-size: 800%;
+	color: white;
+}
+
+.link-icon:hover {
+	font-size: 800%;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.link-desc {
+	padding-top: 15px;
+	font-size: 125%;
+	color: white;
+}
+
+.link-desc:hover {
+	padding-top: 15px;
+	font-size: 125%;
+	color: rgba(97, 112, 246, 0.404);
+}
+
 .masthead {
 	position: relative;
 	width: 100%;
@@ -95,12 +128,22 @@
 	background-size: cover;
 }
 
+.bolded-larger {
+	font-size: 200%;
+	font-weight: bold;
+}
+
+#my-name {
+	font-size: 200%;
+	color: rgba(255, 255, 255, 0.774)!important;
+}
+
 .masthead h1 {
-	font-family: 'Varela Round';
+	font-family: 'Open Sans', sans-serif;;
 	font-size: 2.5rem;
 	line-height: 2.5rem;
 	letter-spacing: 0.8rem;
-	background: -webkit-linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255));
+	background: -webkit-linear-gradient(rgb(255, 255, 255), rgb(255, 247, 247));
 	-webkit-text-fill-color: transparent;
 	-webkit-background-clip: text;
 }
@@ -136,11 +179,16 @@
 .btn {
   box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
   padding: 1.25rem 2rem;
-  font-family: 'Varela Round';
+  font-family: 'Open Sans', sans-serif;;
   font-size: 80%;
   text-transform: uppercase;
   letter-spacing: .15rem;
   border: 0;
+}
+
+.btn-padded {
+	padding: 10px;
+	margin: 5px;
 }
 
 .btn-primary {
@@ -213,15 +261,19 @@
   box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
   padding: 1.25rem 2rem;
   height: auto;
-  font-family: 'Varela Round';
+  font-family: 'Open Sans', sans-serif;;
   font-size: 80%;
   text-transform: uppercase;
   letter-spacing: 0.15rem;
   border: 0;
 }
 
-.contact-section {
-  padding: 5rem 0 0;
+.link-section {
+  padding: 5rem;
+}
+
+.footer-header {
+	color: white;
 }
 
 .contact-section .card {
@@ -231,7 +283,7 @@
 
 .contact-section .card h4 {
   font-size: 0.8rem;
-  font-family: 'Varela Round';
+  font-family: 'Open Sans', sans-serif;;
   text-transform: uppercase;
   letter-spacing: 0.15rem;
 }
@@ -265,7 +317,7 @@
 }
 
 body {
-  font-family: 'Nunito';
+  font-family: 'Open Sans', sans-serif;;
   letter-spacing: 0.0625em;
 }
 
@@ -302,6 +354,10 @@ footer {
 	border-radius: 1em;
 }
 
+.wider-container {
+	max-width: 1500px;
+}
+
 .main-header {
 	text-align: center;
 }
@@ -325,12 +381,11 @@ footer {
 	color: black;
 	text-align: center;
 	height: 1.5em;
-	opacity: .5;
 }
 
 .hr-text:before {
 	content: '';
-	background: linear-gradient(to right, transparent, #818078, transparent);
+	background: linear-gradient(to right, transparent, #2c2c2c, transparent);
 	position: absolute;
 	left: 0;
 	top: 50%;
@@ -375,6 +430,12 @@ footer {
 	color: rgba(255, 255, 255, 0.513);
 }
 
+.center-element {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
 .blog-image {
 	display: block;
 	margin-left: auto;
@@ -384,6 +445,10 @@ footer {
 	box-shadow: 5px 2px 2px rgba(0, 0, 0, 0.568);
 }
 
+div.center-children {
+	text-align: center;
+}
+
 .user_name{
     font-size:14px;
     font-weight: bold;
@@ -391,7 +456,8 @@ footer {
 
 
 .comments-list .media{
-	border-bottom: 1px dotted #ccc;
+	margin-top: 10px;
+	border-bottom: 1px solid #ccc;
 }
 
 .user-avatar {
@@ -399,3 +465,29 @@ footer {
 	height: auto;
 	margin-right: 10px;
 }
+
+/* Hydroponix */
+
+.snapshot-image-large {
+	width: 75%;
+	height: auto;
+	border: 5px solid rgba(0, 0, 0, 0.883);
+	box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.438);
+	border-radius: 10px;
+}
+
+.card-img-top:hover {
+	opacity: 0.5;
+	transition: opacity 0.15s;
+}
+
+.card {
+	/* Center all bootstrap cards */
+	margin: 0 auto; 
+	float: none; 
+	margin-bottom: 10px; 
+}
+
+
+
+

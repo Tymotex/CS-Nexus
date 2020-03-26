@@ -1,31 +1,34 @@
 <%- include("../partials/header.ejs") %>
 
     
-<div class="blogMainBody">
-    <div id="viewBlogContainer" class="blogContainer ui piled segment">
-        <div class="blogContainer ui piled segment">
-            <h1>New Blog Post</h1>
-            <form action="/blogs" method="POST">
-                
-                <div class="ui form segment">    
-                    <div class="field">
-                        <label>Title</label>
-                        <input class="newBlogInputs" type="text" name="blog[title]" placeholder="Title" required>
-                    </div>
-                    <div class="field">
-                        <label>Image URL</label>
-                        <input class="newBlogInputs" type="text" name="blog[image]" placeholder="Image URL">
-                    </div>
-                    <div class="field">
-                        <label>Text Area</label>
-                        <textarea name="blog[content]" required></textarea>
-                    </div>
-                    <button class="ui primary button">Submit</button>
-                    <a class="ui button" href="/blogs">Return</a>
-                </div>
-            </form>
+
+
+ 
+
+
+
+<div class="main-container container">
+	<h1 class="main-header">Create a New Blog Post:</h1>
+	<hr class="divider">
+    <form action="/blogs" method="POST"> 
+        <div class="form-label-group">
+            <label for="input-title">Title</label>
+            <input id="input-title" class="form-control" type="text" name="blog[title]" placeholder="Title" required autofocus>
         </div>
-    </div>  
+        <div class="form-label-group">
+            <label for="input-image">Image URL</label>
+            <input id="input-image" class="form-control" type="text" name="blog[image]" placeholder="Image" required>
+        </div>
+        <div class="form-label-group">
+            <label for="input-content">Blog Content</label>
+            <textarea class="form-control" id="input-content" name="blog[content]" placeholder="Content" required></textarea>
+        </div>
+        <hr class="divider">
+        <div class="center-children">
+            <a class="btn btn-secondary centered-element" href="/blogs">Return</a>
+            <button class="btn btn-primary centered-element">Submit</button>
+        </div>
+    </form>
 </div>
 
 
