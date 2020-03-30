@@ -1,9 +1,27 @@
 <%- include("../partials/header.ejs") %>
 
+<!-- Displaying the flash message, if it exists -->
+<div class="main-container wider-container container">
+	<!-- 
+		We need the condition: && errorMessage.length > 0 
+		because an empty array [] is still a truthy value
+	-->
+	<% if (errorMessage && errorMessage.length > 0) { %>
+		<div class="alert alert-primary">
+			<%= errorMessage %>
+		</div>
+	<% } else if (successMessage && successMessage.length > 0) { %>
+		<div class="alert alert-secondary">
+			<%= successMessage %>
+		</div>
+	<% } %>
+</div>
+
+
 <div class="main-container wider-container container">
     <div class="row">
         <div class="col-md-8">
-            <h1 class="main-header">Computer Science Blogs</h1>  
+            <h1 class="main-header">Computer Science Blogs [WIP]</h1>  
             <hr class="divider"> 
             <!-- Blog Posts -->
             <% for (let i = 0; i < blogs.length; i++) { %>     

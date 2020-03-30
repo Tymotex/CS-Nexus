@@ -32,12 +32,13 @@ router.post("/register", function(req, res) {
     // register() is a convenience method that comes from 'passport-local-mongoose'
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
-            console.log(err);
-            return res.render("auth/register");
+            req.flash("error", err.message);
+            res.render("auth/register");
         } else {
             // Logging the user in after they sign up
             // authenticate() comes from 'passport-local-mongoose'
             passport.authenticate("local")(req, res, function() {
+                req.flash("success", "Welcome " + newUser.username + "! You have successfully registered");
                 res.redirect("/blogs");
             }) 
         }
@@ -57,6 +58,11 @@ router.post("/login", passport.authenticate("local", {
     failureRedirect: "/login"
 }), function(req, res) {
     // TODO: is this callback necessary? Remove?   
+    if (req.isAuthenticated()) {
+        req.flash("success", "You successfully logged in");
+    } else {
+        req.flash("error", "Error logging in");
+    }
 });
 
 // ===== Authentication - Logout (GET) =====
@@ -64,6 +70,7 @@ router.get("/logout", function(req, res) {
     // 'passport' exposes a logout() method attached to req
     // Calling logout() cleanses req.user
     req.logout();
+    req.flash("success", "Logged out successfully");
     res.redirect("/blogs");
 });
 

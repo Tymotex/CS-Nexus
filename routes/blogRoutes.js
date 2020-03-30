@@ -63,8 +63,9 @@ router.get("/:blogID", function(req, res) {
     // The populate() method lets you reference documents in other collections
     // This replaces specified paths in the Blog document with comment documents
     Blog.findById({_id: req.params.blogID}).populate("comments").exec(function(err, foundBlog) {
-        if (err) {
-            res.send("Error");
+        if (err || !foundBlog) {
+            req.flash("error", "Blog wasn't found!")
+            res.redirect("back");
         } else {
             console.log(foundBlog);
             res.render("blogs/blogsView", {
@@ -81,8 +82,9 @@ router.get("/:blogID/edit", authMiddleware.isLoggedIn, authMiddleware.checkBlogO
     // The existing blog must be retrieved so that the edit form shows the
     // current data
     Blog.findById(req.params.blogID, function(err, foundBlog) {
-        if (err) {
-            res.send("Error");
+        if (err || !foundBlog) {
+            req.flash("error", "Blog could not be found");
+            res.redirect("/blogs");
         } else {
             res.render("blogs/blogsEdit", {
                 blog: foundBlog

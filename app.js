@@ -7,17 +7,20 @@ const express = require("express"),
       passport = require("passport"),
       LocalStrategy = require("passport-local"),
       passportLocalMongoose = require("passport-local-mongoose"),
-      Blog = require("./models/blog"),
-      Comment = require("./models/comment"),
-      User = require("./models/user"),
+      flash = require("connect-flash")
       seedDB = require("./seeds"),
-      app = express(),
       multer = require("multer");
 
 const commentRoutes = require("./routes/commentRoutes"),
       blogRoutes = require("./routes/blogRoutes"),
       indexRoutes = require("./routes/indexRoutes"),
       hydroponixRoutes = require("./routes/hydroponixRoutes");
+
+const Blog = require("./models/blog"),
+      Comment = require("./models/comment"),
+      User = require("./models/user");
+
+const app = express();
 
 // Populating the database with sample data
 seedDB();
@@ -32,10 +35,12 @@ app.use(express.static("public"));
 app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 app.use(multer({dest: "./public/uploads/"}).single("photo"));
+app.use(flash())
 
 // Passport Configuration:
 app.use(require("express-session")({
-    secret: "Tim's secret sentence",   // Used to encode and decode information from a session
+    // The secret message is used to encode and decode information from a session
+    secret: "Tim's secret sentence",   
     resave: false,
     saveUninitialized: false
 }));
@@ -45,18 +50,22 @@ passport.use(new LocalStrategy(User.authenticate()));   // Comes with passportLo
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Middleware Functions:
-
+// My Middleware:
 app.use(function(req, res, next) {
+    // Making different flash messages accessible in all templates
+    res.locals.errorMessage = req.flash("error"); 
+    res.locals.successMessage = req.flash("success"); 
     // Makes req.user available as the 'currentUser' variable inside all ejs templates
+    // res.locals is an object that contains response local variables that are availble
+    // to the rendered views
     res.locals.currentUser = req.user;  
-    // This middleware function calls next() in order to progress to the next function in the middleware stack
+    // Calling next() in order to progress to the next function in the middleware stack
     next();  
 });
 
 // ===== Routes =====
 app.use("/", indexRoutes);
-app.use("/blogs", blogRoutes)
+app.use("/blogs", blogRoutes);
 app.use("/blogs/:blogID/comments", commentRoutes);
 app.use("/hydroponix", hydroponixRoutes);
 

@@ -3,11 +3,36 @@
 <header class="masthead">
 	<div class="container d-flex h-100 align-items-center">
 		<div class="mx-auto text-center">
+			<!-- Displaying the flash message, if it exists -->
+			<div class="main-container wider-container container">
+				<!-- 
+					We need the condition: && errorMessage.length > 0 
+					because an empty array [] is still a truthy value
+				-->
+				<% if (errorMessage && errorMessage.length > 0) { %>
+					<div class="alert alert-primary">
+						<%= errorMessage %>
+					</div>
+				<% } else if (successMessage && successMessage.length > 0) { %>
+					<div class="alert alert-secondary">
+						<%= successMessage %>
+					</div>
+				<% } %>
+			</div>
 			<h1 class="mx-auto my-0">CS NEXUS</h1>
 			<hr class="divider inverted">
-			<h2 class="text-white-50 mx-auto mt-2 mb-5">Built with Bootstrap 4, jQuery, Node, Express and MongoDB</h2>
-			<h2 id="my-name" class="text-white-50 bolded-larger mx-auto mt-2 mb-5">Tim Zhang</h2>
-			<h2 class="text-white-50 mx-auto mt-2 mb-5">Arrow here</h2>
+			<h2 class="text-white-50 mx-auto mt-2 mb-5">Built with Node, Express, MongoDB, jQuery and Bootstrap 4</h2>
+			<!-- <h2 id="my-name" class="text-white-50 bolded-larger mx-auto mt-2 mb-5">Tim Zhang</h2> -->
+			<a href="#about">
+				<img class="scroll-down-arrow" src="img/ui/arrow4.png">
+			</a>
+			<ul class="slideshow">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
 		</div>
 	</div>
 </header>
@@ -16,27 +41,29 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 mx-auto">
-			<h2 class="text-white mb-4">Tim Zhang (About section here)</h2>
+			<h2 class="text-white mb-4">About</h2>
 			<p class="text-white-50">
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae beatae amet voluptatum est debitis sint fuga quo deleniti nam earum. Aut minus eligendi soluta, expedita rerum temporibus illum quasi tempora!
+				Hey! I'm Tim Zhang, born in New Zealand and currently living in Sydney, Australia. I am studying computer science and electrical engineering at UNSW, and as an aspiring engineer, I dream of building impactful software applications and technologies for the world at large. 
 			</p>
-			<p class="text-white-50 bolded-larger">
-				Download my <a href="resume/CV_v1.3.pdf" download="Resume.pdf">resume</a>
-			</p>
-			
-			<div><br></div>
+			<!-- <p class="text-white-50 larger">
+				<a href="resume/CV_v1.4.pdf" download="Resume.pdf">Download my resume</a>
+			</p> -->
+			<br><br><br>
 			</div>
 		</div>
 	</div>
 </section>
 
 <!-- Projects Section -->
-<section id="projects" class="projects-section bg-light">
+<section id="projects" class="projects-section">
 	<div class="container">
+		<!-- <div class="center-children">
+			<h2 class="text-white mb-4">Projects</h2>
+		</div> -->
 		<!-- Featured Project Row -->
-		<div class="row align-items-center no-gutters mb-4 mb-lg-5">
+		<!-- <div class="row align-items-center no-gutters mb-4 mb-lg-5">
 			<div class="col-xl-8 col-lg-7">
-				<img class="img-fluid mb-3 mb-lg-0" src="img/bg-masthead.jpg" alt="">
+				<img class="img-fluid mb-3 mb-lg-0" src="img/projects/cosmica/battle_1.png" alt="">
 			</div>
 			<div class="col-xl-4 col-lg-5">
 				<div class="featured-text text-center text-lg-left">
@@ -44,18 +71,25 @@
 					<p class="text-black-50 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius molestias ducimus, natus obcaecati, earum animi unde dolor cum ipsam officia numquam impedit ea molestiae rerum temporibus dolore repellendus consequuntur quas.</p>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- Project One Row -->
 		<div class="row justify-content-center no-gutters mb-5 mb-lg-0">
 			<div class="col-lg-6">
-				<img class="img-fluid" src="img/demo-image-01.jpg" alt="">
+				<img class="img-fluid" src="img/projects/cosmica/thumbnail.png" alt="">
 			</div>
 			<div class="col-lg-6">
 				<div class="bg-black text-center h-100 project">
 					<div class="d-flex h-100">
 						<div class="project-text w-100 my-auto text-center text-lg-left">
-							<h4 class="text-white">Misty</h4>
-							<p class="mb-0 text-white-50">PROJECT 1 HERE</p>
+							<h4 class="text-white">Cosmica &mdash; Protect the Galaxy</h4>
+							<div class="mb-0 text-white-50">
+								An open source cross-platform sci-fi strategy game developed with C# in Unity.
+								Hold down the front lines with a small army of warships to protect the galaxy against the invading alien menace!
+							</div>
+							<br>
+							<a href="https://play.google.com/store/apps/details?id=com.Cosmica.Cosmica"><div class="mb-0 text-white-50 projects-links">Google Play Listing</div></a>
+							<a href="https://github.com/Tymotex/Cosmica"><div class="mb-0 text-white-50 projects-links">GitHub Source Code</div></a>
+							<a href="https://www.youtube.com/watch?v=ganf7AlCvV0"><div class="mb-0 text-white-50 projects-links">Development Showcase</div></a>
 							<hr class="d-none d-lg-block mb-0 ml-0">
 						</div>
 					</div>
@@ -63,19 +97,23 @@
 			</div>
 		</div>
 		<!-- Project Two Row -->
-		<div class="row justify-content-center no-gutters">
+		<div class="row justify-content-center no-gutters mb-5 mb-lg-0">
 			<div class="col-lg-6">
-				<img class="img-fluid" src="img/demo-image-02.jpg" alt="">
+				<img class="img-fluid" src="img/projects/hydroponix/first-half.png" alt="">
 			</div>
 			<div class="col-lg-6 order-lg-first">
 				<div class="bg-black text-center h-100 project">
 					<div class="d-flex h-100">
-						<div class="project-text w-100 my-auto text-center text-lg-right">
-							<h4 class="text-white">Mountains</h4>
-							<p class="mb-0 text-white-50">
-								PROJECT 2 HERE
-							</p>
-							<hr class="d-none d-lg-block mb-0 mr-0">
+						<div class="project-text w-100 my-auto text-center text-lg-left">
+							<h4 class="text-white">Hydroponix &mdash; IoT Plant Propagator</h4>
+							<div class="mb-0 text-white-50">
+								An automated plant propagation and monitoring system built with Python on the Raspberry Pi Zero W, powered by InfluxDB, Flask and other libraries.
+								<em>Hydroponix</em> automatically sends data snapshots to <em>timz.dev/hydroponix</em>.
+							</div>
+							<br>
+							<a href="/hydroponix"><div class="mb-0 text-white-50 projects-links">Hydroponix Data Snapshots</div></a>
+							<a href="https://github.com/Tymotex/Hydroponix"><div class="mb-0 text-white-50 projects-links">GitHub Source Code</div></a>
+							<hr class="d-none d-lg-block mb-0 ml-0">
 						</div>
 					</div>
 				</div>
@@ -84,14 +122,20 @@
 		<!-- Project Three Row -->
 		<div class="row justify-content-center no-gutters mb-5 mb-lg-0">
 			<div class="col-lg-6">
-				<img class="img-fluid" src="img/demo-image-01.jpg" alt="">
+				<img class="img-fluid" src="img/projects/autonomous-vehicle/front-view.png" alt="">
 			</div>
 			<div class="col-lg-6">
 				<div class="bg-black text-center h-100 project">
 					<div class="d-flex h-100">
 						<div class="project-text w-100 my-auto text-center text-lg-left">
-							<h4 class="text-white">Misty</h4>
-							<p class="mb-0 text-white-50">PROJECT 3 HERE</p>
+							<h4 class="text-white">Deliv-O-Bot &mdash; Autonomous Delivery Bot</h4>
+							<div class="mb-0 text-white-50">
+								An autonomous object delivery vehicle built with the Arduino Rev3 MCU development board over a period of nine weeks.
+								The vehicle is controlled by sound signals which indicate where the delivery and pick-up points are. When triggered to pick-up or deliver,
+								it reels down a claw, guided by an ultrasonic sensor attached below the vehicle's platform.
+							</div>
+							<br>
+							<a href="https://www.youtube.com/watch?v=ogIqlcZ1EoI"><div class="mb-0 text-white-50 projects-links">Development and Testing Showcase</div></a>
 							<hr class="d-none d-lg-block mb-0 ml-0">
 						</div>
 					</div>

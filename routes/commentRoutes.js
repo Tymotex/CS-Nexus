@@ -17,8 +17,9 @@ const router = express.Router({
 // ===== RESTful Comment New (GET) =====
 router.get("/new", authMiddleware.isLoggedIn, function(req, res) {
     Blog.findById({_id: req.params.blogID}, function(err, foundBlog) {
-        if (err) {
-            console.log(err);
+        if (err || !foundBlog) {
+            req.flash("Comment was not found");
+            res.redirect("/blogs/" + req.params.blogID);
         } else {
             res.render("comments/commentsNew", {
                 blog: foundBlog
@@ -32,8 +33,9 @@ router.get("/new", authMiddleware.isLoggedIn, function(req, res) {
 // the route: /blogs/:blogID/comments/...
 router.post("/", authMiddleware.isLoggedIn, function(req, res) {
     Blog.findById({_id: req.params.blogID}, function(err, foundBlog) {
-        if (err) {
-            console.log(err);
+        if (err || !foundBlog) {
+            req.flash("Comment was not found");
+            res.redirect("/blogs/" + req.params.blogID);
         } else {
             Comment.create({
                 text: req.body.comment.text,
@@ -56,15 +58,22 @@ router.post("/", authMiddleware.isLoggedIn, function(req, res) {
 
 // ===== RESTful Comment Edit (GET) =====
 router.get("/:commentID/edit", authMiddleware.isLoggedIn, authMiddleware.checkCommentOwnership, function(req, res) {
-    Comment.findById(req.params.commentID, function(err, foundComment) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("comments/commentsEdit", {
-                comment: foundComment,
-                blogID: req.params.blogID
-            });
-        }
+    Blog.findById(req.params.blogID, function(err, foundBlog) {
+        if (err || !foundBlog) {
+            req.flash("error", "Blog was not found");
+            res.redirect("/blogs/" + req.params.blogID);
+        } 
+        Comment.findById(req.params.commentID, function(err, foundComment) {
+            if (err || !foundComment) {
+                req.flash("Comment was not found");
+                res.redirect("/blogs/" + req.params.blogID);
+            } else {
+                res.render("comments/commentsEdit", {
+                    comment: foundComment,
+                    blogID: req.params.blogID
+                });
+            }
+        });
     });
 });
 
@@ -72,8 +81,9 @@ router.get("/:commentID/edit", authMiddleware.isLoggedIn, authMiddleware.checkCo
 router.put("/:commentID/", authMiddleware.isLoggedIn, authMiddleware.checkCommentOwnership, function(req, res) {
     req.body.comment.text = req.sanitize(req.body.comment.text);
     Comment.findByIdAndUpdate(req.params.commentID, req.body.comment, function(err, updatedComment) {
-        if (err) {
-            console.log(err);
+        if (err || !updatedComment) {
+            req.flash("Comment was not found");
+            res.redirect("/blogs/" + req.params.blogID);
         } else {
             res.redirect("/blogs/" + req.params.blogID);
         }
@@ -84,7 +94,8 @@ router.put("/:commentID/", authMiddleware.isLoggedIn, authMiddleware.checkCommen
 router.delete("/:commentID/", authMiddleware.isLoggedIn, authMiddleware.checkCommentOwnership, function(req, res) {
     Comment.findByIdAndRemove(req.params.commentID, function(err, removedComment) {
         if (err) {
-            console.log(err);
+            req.flash("Comment was not found");
+            res.redirect("/blogs/" + req.params.blogID);
         } else {
             res.redirect("/blogs/" + req.params.blogID);
         }
