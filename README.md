@@ -6,7 +6,7 @@ Built with Bootstrap 4, jQuery, Node.js, Express, MongoDB with Mongoose and Pass
 - Sending POST requests to Hydroponix routes should require authentication
 - Implement pagination for blogs, comments and Hydroponix data snapshots 
 - Set up parallax background scrolling effect
-- Unsplash API for changing background image
+- Set up fuzzy search for blogs 
 
 ### Using Forever:
 Inside the project root directory, run:
