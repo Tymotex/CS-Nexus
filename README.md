@@ -7,6 +7,7 @@ Built with Bootstrap 4, jQuery, Node.js, Express, MongoDB with Mongoose and Pass
 - Implement pagination for blogs, comments and Hydroponix data snapshots 
 - Set up parallax background scrolling effect
 - Set up fuzzy search for blogs 
+- Add a markdown editor for formatting blog content
 
 ### Using Forever:
 Inside the project root directory, run:
