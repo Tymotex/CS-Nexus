@@ -65,6 +65,28 @@ var comments = [
     }
 ];
 
+function wipeDB() {
+    Blog.remove({}, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log("Wiped all blogs");
+        Comment.remove({}, function(err) {
+            console.log("Wiped all comments");
+        });
+    });
+
+    /*
+    // Wipe all plant data
+    PlantData.remove({}, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log("Wiped all plant data");
+    });
+    */
+}
+
 function seedDB() {
     Blog.remove({}, function(err) {
         if (err) {
@@ -93,19 +115,12 @@ function seedDB() {
             }
         });
     });
-
-    /*
-    // Wipe all plant data
-    PlantData.remove({}, function(err) {
-        if (err) {
-            console.log(err);
-        }
-        console.log("Wiped all plant data");
-    });
-    */
 }
 
-module.exports = seedDB;
+module.exports = {
+    seedDB: seedDB,
+    wipeDB: wipeDB
+};
 
 
 /*

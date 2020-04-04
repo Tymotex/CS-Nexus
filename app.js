@@ -8,7 +8,7 @@ const express = require("express"),
       LocalStrategy = require("passport-local"),
       passportLocalMongoose = require("passport-local-mongoose"),
       flash = require("connect-flash")
-      seedDB = require("./seeds"),
+      util = require("./util"),
       multer = require("multer");
 
 const commentRoutes = require("./routes/commentRoutes"),
@@ -23,7 +23,9 @@ const Blog = require("./models/blog"),
 const app = express();
 
 // Populating the database with sample data
-seedDB();
+// util.seedDB();
+// Wiping the blogs and comments in the database
+// util.wipeDB();
 
 // ===== App Configuration =====
 app.use(bodyParser.urlencoded({extended: true}));
