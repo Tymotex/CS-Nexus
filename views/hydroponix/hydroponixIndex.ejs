@@ -3,20 +3,22 @@
  
         
 
-<div class="main-container wider-container container">
-    <div class="center-children"> 
-        <h1 class="main-header">Hydroponix Data Snapshots</h1> 
-        <h1 class="main-header"><i class="fa fa-tree"></i></h1>
-        <h5><a href="https://github.com/Tymotex/Hydroponix">View project on GitHub</a></h5>
-        <h3>See all the data snapshots from the Hydroponix below!</h3> 
-        <hr class="divider">
-    </div>        
+<div class="main-container wider-container padded-container container">
+    <div class="jumbotron">
+        <div class="center-children"> 
+            <h1 class="main-header">Hydroponix Data Snapshots</h1> 
+            <hr class="divider">
+            <h1 class="main-header"><i class="fa fa-tree"></i></h1>
+            <h5><a href="https://github.com/Tymotex/Hydroponix">View project on GitHub</a></h5>
+            <h3>See all the data snapshots below</h3> 
+        </div>   
+    </div>     
 
     <!-- Nested bootstrap grid -->
     <div class="row">
         <% for (let i = 0; i < plantData.length; i++) { %>      
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                <div class="card" style="width: 19rem;">
+                <div class="card hydroponix-card">
                     <a href="<%= '/hydroponix/' + plantData[i]._id %>">
                         <img class="card-img-top" src="<%= '../' + plantData[i].imgPath %>">
                     </a>
@@ -27,7 +29,7 @@
                             </a>
                         </div>
                         <p class="card-text">
-                            <strong>Summary: </strong><%- plantData[i].content.substring(0, 300) %>... <a href="<%= '/hydroponix/' + plantData[i]._id %>">Read more</a>
+                            <strong>Summary: </strong><%- plantData[i].content.substring(0, 75) %>... <a href="<%= '/hydroponix/' + plantData[i]._id %>">Read more</a>
                         </p>
                         <p class="card-text">
                             <strong>Time: </strong> <%= moment(plantData[i].timeCreated).tz('Australia/Sydney').format("MMMM Do, YYYY, h:mm:ss A") %>

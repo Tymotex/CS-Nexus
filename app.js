@@ -65,6 +65,10 @@ app.use(function(req, res, next) {
     next();  
 });
 
+// ====
+app.use("/scripts", express.static(__dirname + "/node_modules/"))
+
+
 // ===== Routes =====
 app.use("/", indexRoutes);
 app.use("/blogs", blogRoutes);

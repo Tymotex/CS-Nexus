@@ -1,54 +1,67 @@
 <%- include("../partials/header.ejs") %>
 
 <!-- Displaying the flash message, if it exists -->
-<div class="main-container wider-container container">
 	<!-- 
 		We need the condition: && errorMessage.length > 0 
 		because an empty array [] is still a truthy value
 	-->
 	<% if (errorMessage && errorMessage.length > 0) { %>
-		<div class="alert alert-primary">
-			<%= errorMessage %>
-		</div>
+		<div class="main-container wider-container container">
+			<div class="alert alert-primary">
+				<%= errorMessage %>
+			</div>
+		</div>	
 	<% } else if (successMessage && successMessage.length > 0) { %>
-		<div class="alert alert-secondary">
-			<%= successMessage %>
+		<div class="main-container wider-container container">
+			<div class="alert alert-secondary">
+				<%= successMessage %>
+			</div>
 		</div>
 	<% } %>
-</div>
 
 
-<div class="main-container wider-container container">
+<div class="main-container wider-container padded-container container">
+	<div class="jumbotron">
+		<div class="center-children">
+			<h1 class="main-header">Developer Blogs</h1>
+			<p>A compilation of things we've learned, amazing libraries and reasons to love building software applications <i class="fas fa-hand-holding-heart"></i> </p>  
+			<p>Work in progress!</p>
+		</div>
+	</div>
     <div class="row">
-        <div class="col-md-8">
-            <h1 class="main-header">Computer Science Blogs [WIP]</h1>  
+        <div class="col-lg-8 col-md-12">
             <hr class="divider"> 
-            <!-- Blog Posts -->
-            <% for (let i = 0; i < blogs.length; i++) { %>     
-                <div class="card blog-card mb-4">  
-                    <img class="card-img-top" src="<%= blogs[i].image %>" alt="Card image cap">
-                    <div class="card-body">
-                        <div class="item">
-                            <div class="content">
-                                <a class="header" href="/blogs/<%= blogs[i]._id %>">
-                                    <h2 class="card-title"><%= blogs[i].title %></h2>
-                                </a>
-                                <hr class="divider inverted">
-                                <p class="card-text">
-                                    <%- blogs[i].content.substring(0, 300) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <strong>
-                            Author: <%= blogs[i].author.username %>
-                            <br>
-                            Time posted: <%= moment(blogs[i].timeCreated).tz('Australia/Sydney').format("DD-MM-YYYY") %>
-                        </strong>
-                    </div>
-                </div> 
-            <% } %>   
+			<!-- Blog Posts -->
+			<div class="row">
+				<% for (let i = 0; i < blogs.length; i++) { %>     
+					<div class="col-xl-6 col-lg-12">
+						<div class="card blog-card mb-4">  
+							<a href="/blogs/<%= blogs[i]._id %>"><img class="card-img-top" src="<%= blogs[i].image %>" alt="Card image cap"></a>
+							<div class="card-body">
+								<div class="item">
+									<div class="content">
+										<a class="header" href="/blogs/<%= blogs[i]._id %>">
+											<h2 class="card-title"><%= blogs[i].title %></h2>
+										</a>
+										<hr class="divider inverted">
+										<p class="card-text">
+											<%- blogs[i].content.substring(0, 300) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								
+								<strong>Author:</strong> <a href="#"><%= blogs[i].author.username %></a>
+									<br>
+								<strong>Time posted:</strong> <%= moment(blogs[i].timeCreated).tz('Australia/Sydney').format("DD-MM-YYYY") %>
+							</div>
+						</div> 
+					</div>
+				<% } %>   
+
+			</div>
+            
             <!-- Pagination for my blogs -->
             <ul class="pagination justify-content-center mb-4">
 				<li class="page-item">
@@ -59,7 +72,7 @@
 				</li>
 			</ul>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-12">
             <!-- Search Widget -->
             <div class="card my-4">
 				<h5 class="card-header">Search</h5>

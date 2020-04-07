@@ -1,7 +1,7 @@
 <%- include("../partials/header.ejs") %>
 
 
-<div class="main-container container">
+<div class="main-container view-container container">
 	<h1 class="main-header"><em><%= blog.title %></em></h1>
 	<hr class="hr-text" data-content="Written by <%= blog.author.username %>">
 	<img class="blog-image" src="<%= blog.image %>">
@@ -64,6 +64,7 @@
 				</div>
 			<% } %>
 		</div>
+		<br>
 		<div class="center-children">
 			<a class="btn btn-secondary" href="/blogs/<%= blog._id %>/comments/new">Add Comment</a>
 		</div>
