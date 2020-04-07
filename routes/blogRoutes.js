@@ -14,16 +14,22 @@ const router = express.Router();
 //                 |   GET  |  GET  |   POST   |  GET   |  GET   |   PUT    |   DELETE  |
 // ===== RESTful Blog Index (GET) =====
 router.get("/", function(req, res) {
-    console.log("Attempting to view all blogs");
-    Blog.find({}, function(err, searchResults) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("blogs/blogsIndex", {
-                blogs: searchResults,
-                moment: moment
-            });
-        }
+    var blogsPerPage = 4;
+    var pageQuery = parseInt(req.query.page);
+    var pageNumber = pageQuery ? pageQuery : 1;
+    Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
+        Blog.count().exec(function(err, count) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("blogs/blogsIndex", {
+                    blogs: searchResults,
+                    moment: moment,
+                    current: pageNumber,
+                    pages: Math.ceil(count / blogsPerPage)
+                });
+            }
+        });
     });
 });
 

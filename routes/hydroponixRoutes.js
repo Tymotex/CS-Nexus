@@ -20,18 +20,26 @@ const router = express.Router({
 // ===== RESTful Hydroponix Index (GET) =====
 router.get("/", function(req, res) {
     // Show a list of all data snapshots
-    PlantData.find({}, function(err, searchResults) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(searchResults);
-            if (searchResults.length >= 1) {
-            }
-            res.render("hydroponix/hydroponixIndex", {
-                plantData: searchResults,
-                moment: moment
-            });
-        } 
+    var cardsPerPage = 8
+    var pageQuery = parseInt(req.query.page);
+    var pageNumber = pageQuery ? pageQuery : 1;
+
+    PlantData.find({}).skip(cardsPerPage * (pageNumber - 1)).limit(cardsPerPage).exec(function(err, searchResults) {
+        PlantData.count().exec(function(err, count) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(searchResults);
+                if (searchResults.length >= 1) {
+                }
+                res.render("hydroponix/hydroponixIndex", {
+                    plantData: searchResults,
+                    moment: moment,
+                    current: pageNumber,
+                    pages: Math.ceil(count / cardsPerPage)
+                });
+            } 
+        });
     });
 });
 

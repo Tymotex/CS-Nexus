@@ -27,9 +27,10 @@ const app = express();
 // Wiping the blogs and comments in the database
 // util.wipeDB();
 
-// ===== App Configuration =====
+// ===== App Configuration and Setup =====
+databaseURI = "mongodb://localhost:27017/Blog"
+mongoose.connect(databaseURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 app.use(bodyParser.urlencoded({extended: true}));
-mongoose.connect("mongodb://localhost:27017/Blog", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 // Method-override lets us make PUT or DELETE requests instead of POST requests for forms. 
