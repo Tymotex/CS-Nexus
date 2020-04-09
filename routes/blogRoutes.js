@@ -10,27 +10,60 @@ const Blog = require("../models/blog"),
 
 const router = express.Router();
 
+// ===== Helper functions =====
+// Preventing DDoS attacks
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 // RESTful Routes: |  Index |  New  |  Create  |  Show  |  Edit  |  Update  |  Destroy  | 
 //                 |   GET  |  GET  |   POST   |  GET   |  GET   |   PUT    |   DELETE  |
 // ===== RESTful Blog Index (GET) =====
 router.get("/", function(req, res) {
-    var blogsPerPage = 4;
-    var pageQuery = parseInt(req.query.page);
-    var pageNumber = pageQuery ? pageQuery : 1;
-    Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
-        Blog.count().exec(function(err, count) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.render("blogs/blogsIndex", {
-                    blogs: searchResults,
-                    moment: moment,
-                    current: pageNumber,
-                    pages: Math.ceil(count / blogsPerPage)
-                });
-            }
+    console.log(req.query);
+    if (req.query.searchTarget) {
+        escapeRegex(req.query.searchTarget);
+         // "gi" are flags -> "g" is "global" which finds all matches rather than stopping at first match
+         // "i" is "ignore case"
+        const regex = RegExp(escapeRegex(req.query.searchTarget), "gi"); 
+        var blogsPerPage = 4;
+        var pageQuery = parseInt(req.query.page);
+        var pageNumber = pageQuery ? pageQuery : 1;
+        Blog.find({title: regex}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
+            Blog.count({title: regex}).exec(function(err, blogCount) { 
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("blogs/blogsIndex", {
+                        blogs: searchResults,
+                        moment: moment,
+                        current: pageNumber,
+                        pages: Math.ceil(blogCount / blogsPerPage),
+                        searchTarget: req.query.searchTarget
+                    });
+                }
+            });
         });
-    });
+    } else {
+        var blogsPerPage = 4;
+        var pageQuery = parseInt(req.query.page);
+        var pageNumber = pageQuery ? pageQuery : 1;
+        Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
+            Blog.count().exec(function(err, blogCount) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("blogs/blogsIndex", {
+                        blogs: searchResults,
+                        moment: moment,
+                        current: pageNumber,
+                        pages: Math.ceil(blogCount / blogsPerPage),
+                        searchTarget: null
+                    });
+                }
+            });
+        });
+    }
 });
 
 // ===== RESTful Blog New (GET) =====
@@ -44,7 +77,7 @@ router.get("/new", authMiddleware.isLoggedIn, function(req, res) {
 // thanks to 'body-parser' 
 router.post("/", authMiddleware.isLoggedIn, function(req, res) {
     // 'express-sanitizer' filters out malicious raw code in the newly created blog
-    req.body.blog.content = req.sanitize(req.body.blog.content);
+    // req.body.blog.content = req.sanitize(req.body.blog.content);
     Blog.create({
         title: req.body.blog.title,
         author: {
@@ -102,7 +135,7 @@ router.get("/:blogID/edit", authMiddleware.isLoggedIn, authMiddleware.checkBlogO
 // ===== RESTful Blog Update (PUT) =====
 // Update the blog document in the database with the submitted modifications 
 router.put("/:blogID", authMiddleware.isLoggedIn, authMiddleware.checkBlogOwnership, function(req, res) {
-    req.body.blog.content = req.sanitize(req.body.blog.content);
+    // req.body.blog.content = req.sanitize(req.body.blog.content);
     // req.body.blog is an object containing the modified fields: title, image, content
     Blog.findByIdAndUpdate(req.params.blogID, req.body.blog, function(err, updatedBlog) {
         if (err) {

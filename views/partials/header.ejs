@@ -47,9 +47,15 @@
 							<a class="nav-link js-scroll-trigger" href="/blogs">Blogs</a>
 						</li>
 						<% if (currentUser) { %>
-							<li class="nav-item left-divider">
-								<a class="nav-link">Signed in as <em><%= currentUser.username%></em></a>
-							</li>
+							<% if (currentUser && currentUser.isAdmin) { %>
+								<li class="nav-item">
+									<a class="nav-link">Welcome admin <em><%= currentUser.username%></em></a>
+								</li>
+							<% } else { %>
+								<li class="nav-item">
+									<a class="nav-link">Signed in as <em><%= currentUser.username%></em></a>
+								</li>
+							<% } %>
 							<li class="nav-item">
 								<a class="nav-link" href="/logout">Log Out</a>
 							</li>

@@ -92,6 +92,7 @@ router.put("/:commentID/", authMiddleware.isLoggedIn, authMiddleware.checkCommen
 
 // ===== RESTful Comment Destroy (DELETE) ===== 
 router.delete("/:commentID/", authMiddleware.isLoggedIn, authMiddleware.checkCommentOwnership, function(req, res) {
+    console.log("Deleting comment");
     Comment.findByIdAndRemove(req.params.commentID, function(err, removedComment) {
         if (err) {
             req.flash("Comment was not found");

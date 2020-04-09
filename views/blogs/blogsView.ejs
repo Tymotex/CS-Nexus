@@ -17,7 +17,7 @@
 			<strong>Time posted: <%= moment(blog.timeCreated).tz('Australia/Sydney').format("DD-MM-YYYY, LT") %></strong>
 		</div>
 		<br>
-		<% if (currentUser && blog.author.id.equals(currentUser._id)) { %>
+		<% if (currentUser && (blog.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %>
 		<div>
 			<div class="center-children">
 				<!-- Need to use a form with _method=DELETE in order to override the POST method -->
@@ -49,7 +49,7 @@
 							<br>
 							<a href="">Like</a> - <a href="">Share</a>
 						</small></p>
-						<% if (currentUser && blog.comments[i].author.id.equals(currentUser._id)) { %>
+						<% if (currentUser && (blog.comments[i].author.id.equals(currentUser._id)  || currentUser.isAdmin)) { %>
 							<div>
 								<!-- Need to use a form with _method=DELETE in order to override the POST method -->
 								<form action="/blogs/<%= blog._id %>/comments/<%= blog.comments[i]._id %>?_method=DELETE" method="POST">

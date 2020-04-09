@@ -5,22 +5,22 @@
 		We need the condition: && errorMessage.length > 0 
 		because an empty array [] is still a truthy value
 	-->
+
+
+<div class="main-container wider-container padded-container container">
 	<% if (errorMessage && errorMessage.length > 0) { %>
-		<div class="main-container wider-container container">
+		<div class="container flash-container">
 			<div class="alert alert-primary">
 				<%= errorMessage %>
 			</div>
 		</div>	
 	<% } else if (successMessage && successMessage.length > 0) { %>
-		<div class="main-container wider-container container">
+		<div class="container flash-container">
 			<div class="alert alert-secondary">
 				<%= successMessage %>
 			</div>
 		</div>
 	<% } %>
-
-
-<div class="main-container wider-container padded-container container">
 	<div class="jumbotron">
 		<div class="center-children">
 			<h1 class="main-header">Developer Blogs</h1>
@@ -28,10 +28,17 @@
 			<p>Work in progress!</p>
 		</div>
 	</div>
+	<hr class="divider"> 
     <div class="row">
         <div class="col-lg-8 col-md-12">
-            <hr class="divider"> 
 			<!-- Blog Posts -->
+			<% if (blogs.length < 1) { %>
+				<div class="center-children">
+					<div class="jumbotron">
+						No blogs were found <i class="fas fa-sad-tear"></i>
+					</div>
+				</div>
+			<% } %>
 			<div class="row">
 				<% for (let i = 0; i < blogs.length; i++) { %>     
 					<div class="col-xl-6 col-lg-12">
@@ -45,7 +52,7 @@
 										</a>
 										<hr class="divider inverted">
 										<p class="card-text">
-											<%- blogs[i].content.substring(0, 300) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
+											<%- blogs[i].content.substring(0, 250) %>... <a href="/blogs/<%= blogs[i]._id %>">Read more</a>
 										</p>
 									</div>
 								</div>
@@ -59,7 +66,7 @@
 						</div> 
 					</div>
 				<% } %>   
-
+				
 			</div>
             
             <!-- Pagination for my blogs -->
@@ -71,16 +78,14 @@
 							<li class="page-item disabled"><a class="page-link">First</a></li>
 							<li class="page-item disabled"><a class="page-link">«</a></li>
 						<% } else { %>
-							<li><a class="page-link" href="/blogs">First</a></li>
-							<li><a class="page-link" href="/blogs?page=<%= Number(current) - 1 %>">«</a></li>
+							<% if (!searchTarget) { %>
+								<li><a class="page-link" href="/blogs">First</a></li>
+								<li><a class="page-link" href="/blogs?page=<%= Number(current) - 1 %>">«</a></li>
+							<% } else { %>
+								<li><a class="page-link" href="/blogs">First</a></li>
+								<li><a class="page-link" href="/blogs?page=<%= Number(current) - 1 %>&searchTarget=<%= searchTarget %>">«</a></li>
+							<% } %>
 						<% } %>
-				
-						<!-- <% if (current == 1) { %>
-							<li class="page-item disabled"><a class="page-link">«</a></li>
-						<% } else { %>
-							<li><a class="page-link" href="/blogs?page=<%= Number(current) - 1 %>">«</a></li>
-						<% } %>
-							 -->
 						<!-- Setting up the numbers: currPage, currPage + 1, ..., currPage + 3 -->
 						<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
 						<% if (i !== 1) { %>
@@ -88,9 +93,17 @@
 						<% } %>
 						<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
 							<% if (i == current) { %>
-								<li class="active"><a class="page-link"><%= i %></a></li>
+								<% if (!searchTarget) { %>
+									<li class="active"><a class="page-link"><%= i %></a></li>
+								<% } else { %>
+									<li class="active"><a class="page-link"><%= i %></a></li>
+								<% } %>
 							<% } else { %>
-								<li><a class="page-link" href="/blogs?page=<%= i %>"><%= i %></a></li>
+								<% if (!searchTarget) { %>
+									<li><a class="page-link" href="/blogs?page=<%= i %>"><%= i %></a></li>
+								<% } else { %>
+									<li><a class="page-link" href="/blogs?page=<%= i %>&searchTarget=<%= searchTarget %>"><%= i %></a></li>
+								<% } %>
 							<% } %>
 		
 							<% if (i == Number(current) + 4 && i < pages) { %>
@@ -103,8 +116,13 @@
 							<li class="page-item disabled"><a class="page-link">»</a></li>
 							<li class="page-item disabled"><a class="page-link">Last</a></li>
 						<% } else { %>
-							<li><a class="page-link" href="/blogs?page=<%= Number(current) + 1 %>">»</a></li>
-							<li><a class="page-link" href="/blogs?page=<%= pages %>">Last</a></li>
+							<% if (!searchTarget) { %>
+								<li><a class="page-link" href="/blogs?page=<%= Number(current) + 1 %>">»</a></li>
+								<li><a class="page-link" href="/blogs?page=<%= pages %>">Last</a></li>
+							<% } else { %>
+								<li><a class="page-link" href="/blogs?page=<%= Number(current) + 1 %>">»</a></li>
+								<li><a class="page-link" href="/blogs?page=<%= pages %>&searchTarget=<%= searchTarget %>">Last</a></li>
+							<% } %>
 						<% } %>
 				
 						<!-- <% if (current == pages) { %>
@@ -117,37 +135,50 @@
 			</nav>
         </div>
         <div class="col-lg-4 col-md-12">
-            <!-- Search Widget -->
-            <div class="card my-4">
-				<h5 class="card-header">Search</h5>
-				<div class="card-body">
-					<div class="input-group">
-					<textarea class="form-control non-resizeable" type="text" placeholder="Search for..."></textarea>
-					<span class="input-group-btn">
-						<button class="btn btn-sm btn-secondary" type="button">Go!</button>
-					</span>
+				
+			
+			<!-- Search Widget -->
+			<div class="d-flex justify-content-center">
+				<form action="/blogs" method="GET">
+					<div class="searchbar">
+						<input class="searchInput" type="text" name="searchTarget" placeholder="Search blogs..." required>
+						<button class="search_icon"><i class="fas fa-search"></i></button>
+					
 					</div>
+				</form>
+			</div>
+			<!-- <div class="row">
+				<div class="col-lg-6">
+					<button type="button" class="close" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-            </div>
+			</div> -->		
+			
             <!-- Categories Widget -->
             <div class="card my-4">
-				<h5 class="card-header">Categories</h5>
+				<div class="center-children">
+					<h5 class="card-header">Categories</h5>
+				</div>
 				<div class="card-body">
 					<div class="row">
-					<div class="col-lg-6">
+					<div class="col-lg-6 center-children">
 						<ul class="list-unstyled mb-0">
-						<li>
-							<a href="#">HTML</a>
-						</li>
-						<li>
-							<a href="#">CSS</a>
-						</li>
-						<li>
-							<a href="#">JavaScript</a>
-						</li>
+							<li>
+								<a href="#">HTML</a>
+							</li>
+							<li>
+								<a href="#">CSS</a>
+							</li>
+							<li>
+								<a href="#">JavaScript</a>
+							</li>
+							<li>
+								<a href="#">Game Dev</a>
+							</li>
 						</ul>
 					</div>
-					<div class="col-lg-6">
+					<div class="col-lg-6 center-children">
 						<ul class="list-unstyled mb-0">
 						<li>
 							<a href="#">C#</a>
@@ -156,7 +187,7 @@
 							<a href="#">Python</a>
 						</li>
 						<li>
-							<a href="#">Game Dev</a>
+							<a href="#">C</a>
 						</li>
 						</ul>
 					</div>
@@ -165,11 +196,10 @@
             </div>
             <!-- Side Widget -->
             <div class="card my-4">
-				<div class="card-body">
-					<a class="btn btn-secondary center-element" href="/blogs/new">Create a new blog</a> 
-				</div>
+				<a class="btn btn-secondary center-element" href="/blogs/new">Create a new blog</a> 
+				
             </div>
-        </div>
+		</div>
     </div> 
 </div>
 

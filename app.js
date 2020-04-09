@@ -24,8 +24,8 @@ const app = express();
 
 // Populating the database with sample data
 // util.seedDB();
-// Wiping the blogs and comments in the database
-// util.wipeDB();
+// Wiping the documents from the database:
+// util.wipeUsers();
 
 // ===== App Configuration and Setup =====
 databaseURI = "mongodb://localhost:27017/Blog"
@@ -50,6 +50,22 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));   // Comes with passportLocalMongoose
+// passport.use(new LocalStrategy({
+//         usernameField: "emailOrUsername",
+//         passwordField: "password"
+//     },
+//     function(emailOrUsername, password, done) {
+//         User.findOne({ email: emailOrUsername }, function(err, user) {
+//             console.log("Found user by email!"); 
+//             if (!user) {
+//                 User.findOne({ username: emailOrUsername }, function(err, user) {
+//                     console.log("Found user by username");
+//                 });
+//             }
+//         });
+
+//     }
+// ));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 

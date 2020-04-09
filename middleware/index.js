@@ -35,7 +35,7 @@ authMiddleware.checkBlogOwnership = function(req, res, next) {
         } else {
             // Can't directly use '==' to compare IDs because req.user._id is a string and
             // foundBlog.author.id is a Mongoose ObjectID
-            if (foundBlog.author.id.equals(req.user._id)) {
+            if (foundBlog.author.id.equals(req.user._id) || req.user.isAdmin) {
                 // User is authorised to make changes to this blog
                 // Calling next to proceed with the next operation along the middleware stack
                 next();
@@ -56,7 +56,7 @@ authMiddleware.checkCommentOwnership = function(req, res, next) {
             req.flash("error", "Comment was not found");
             res.redirect("back");
         } else {
-            if (foundComment.author.id.equals(req.user._id)) {
+            if (foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {
                 next();
             } else {
                 req.flash("error", "You are not authorised to do that!");

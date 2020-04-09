@@ -1,0 +1,17 @@
+<!-- 
+    We need the condition: && errorMessage.length > 0 
+    because an empty array [] is still a truthy value
+-->
+<% if (errorMessage && errorMessage.length > 0) { %>
+    <div class="container flash-container">
+        <div class="alert alert-primary" style="text-align: center;">
+            <%= errorMessage %>
+        </div>
+    </div>	
+<% } else if (successMessage && successMessage.length > 0) { %>
+    <div class="container flash-container">
+        <div class="alert alert-secondary" style="text-align: center;">
+            <%= successMessage %>
+        </div>
+    </div>
+<% } %>

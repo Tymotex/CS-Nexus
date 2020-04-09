@@ -1,21 +1,88 @@
 <%- include("../partials/authHeader.ejs") %>
 
-<div class="container-fluid">
+<div class="container-login"">
+	<div class="login-box">
+		<%- include("../partials/flashMessage.ejs") %>
+		<form action="/register" method="POST">
+			<div class="center-children">
+				<h3 style="text-align: center;">Register Now</h3>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<a href="#" class="btn-facebook alternative-sign-in-button">
+						<i class="fab fa-facebook"></i>
+						Facebook
+					</a>
+				</div>
+				<div class="col-md-6">
+					<a href="#" class="btn-google m-b-20">
+						<i class="fab fa-google" style="padding-right: 15px;"></i>
+						Google
+					</a>
+				</div>
+			</div>
+			<br>
+
+			<!-- Email -->
+			<div>
+				<span class="txt1">
+					Email
+				</span>
+			</div>
+			<div class="wrap-input validate-input" data-validate="Email is required">
+				<input class="input100" type="text" name="email" style="background-color: whitesmoke;" required autofocus>
+				<span class="focus-input100"></span>
+			</div>
+			<br>
+
+			<!-- Username -->
+			<div>
+				<span class="txt1">
+					Username
+				</span>
+			</div>
+			<div class="wrap-input validate-input" data-validate="Username is required">
+				<input class="input100" type="text" name="username" required>
+				<span class="focus-input100"></span>
+			</div>
+			<br>
+			
+			<!-- Password -->
+			<span class="txt1">
+				Password
+			</span>
+			<div class="wrap-input validate-input" data-validate="Password is required">
+				<input class="input100" type="password" name="password" required>
+				<span class="focus-input100"></span>
+			</div>
+
+			<br>
+			<button class="login100-form-btn">
+				Register
+			</button>
+		</form>
+	</div>
+</div>
+
+
+
+<!-- <div class="container-fluid">
 	<div class="row no-gutter">
 		<div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
 		<div class="col-md-8 col-lg-6">
 			<div class="login d-flex align-items-center py-5">
 				<div class="container">
 					<div class="row">
-						<div class="col-md-9 col-lg-8 mx-auto">
+						<div class="col-md-9 col-lg-8 mx-auto"> -->
 
 							<!-- Displaying the flash message, if it exists -->
-							<div class="main-container wider-container container">
+							<!-- <div class="main-container wider-container container"> -->
 								<!-- 
 									We need the condition: && errorMessage.length > 0 
 									because an empty array [] is still a truthy value
 								-->
-								<% if (errorMessage && errorMessage.length > 0) { %>
+								<!-- <% if (errorMessage && errorMessage.length > 0) { %>
 									<div class="alert alert-primary">
 										<%= errorMessage %>
 									</div>
@@ -29,8 +96,12 @@
 							<h3 class="login-heading mb-4">Registration:</h3>
 							<form action="/register" method="POST">
 								<div class="form-label-group">
-									<input id="input-username" class="form-control" type="text" name="username" placeholder="Username" autofocus>
+									<label for="input-email">Email</label>
+									<input id="input-email" class="form-control" type="email" name="email" placeholder="Email" required autofocus>
+								</div>
+								<div class="form-label-group">
 									<label for="input-username">Username</label>
+									<input id="input-username" class="form-control" type="text" name="username" placeholder="Username" required autofocus>
 								</div>
 								<div class="form-label-group">
 									<input id="input-password" class="form-control" type="password" name="password" placeholder="Password" required>
@@ -44,6 +115,7 @@
 			</div>  
 		</div>
 	</div>
-</div>
+</div> -->
+
 
 <%- include("../partials/authFooter.ejs") %>

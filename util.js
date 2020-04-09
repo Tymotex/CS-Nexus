@@ -2,6 +2,7 @@ const mongoose = require("mongoose"),
       fs = require("fs"),
       Blog = require("./models/blog"),
       Comment = require("./models/comment"),
+      User = require("./models/user")
       PlantData = require("./models/plantdata");
 
 function wipeBlogs() {
@@ -25,7 +26,16 @@ function wipeComments() {
     });
 }  
 
-function seedDB() {
+function wipeUsers() {
+    User.remove({}, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log("Wiped all users")
+    });
+}  
+
+async function seedDB() {
     // Wiping all blogs and all comments:
     let blogs = await Blog.remove({});
     let comments = await Comment.remove({});
@@ -49,5 +59,6 @@ function seedDB() {
 module.exports = {
     seedDB: seedDB,
     wipeBlogs: wipeBlogs,
-    wipeComments: wipeComments
+    wipeComments: wipeComments,
+    wipeUsers: wipeUsers
 };
