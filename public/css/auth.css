@@ -169,12 +169,28 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
+}
+
+/* Applying blur and grayscale */
+.background-blurred {
   background-image: url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1952&q=80);
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;;
+  background-repeat: no-repeat;
+  width: 100%;  
+  min-height: 100vh;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -100;
+  display: block;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px) grayscale(20%);
+  box-shadow: 0 0 5px 10px black;
 }
-
 
 .login-box {
   width: 680px;
@@ -222,8 +238,7 @@ iframe {
   z-index: 1;
 }
 
-.btn-google::before,
-.btn-facebook::before {
+.btn-google::before, .btn-facebook::before {
   content: "";
   display: block;
   position: absolute;
@@ -234,10 +249,10 @@ iframe {
   top: 0;
   left: 0;
   background: #a64bf4;
-  background: -webkit-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: -o-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: -moz-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: linear-gradient(45deg, #00dbde, #fc00ff);
+  background: -webkit-linear-gradient(45deg, #a1dcff, #fc00ff);
+  background: -o-linear-gradient(45deg, #a1dcff, #fc00ff);
+  background: -moz-linear-gradient(45deg, #a1dcff, #fc00ff);
+  background: linear-gradient(to bottom right, #a1dcff, #fc00ff);
   opacity: 0;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -257,17 +272,15 @@ iframe {
 }
 
 .btn-google {
-  color: #555555;
-  background-color: #fff;
+  color: white;
+  background-color: rgb(139, 160, 255);
 }
 
-.btn-facebook:hover:before,
-.btn-google:hover:before {
+.btn-facebook:hover:before, .btn-google:hover:before {
   opacity: 1;
 }
 
-.btn-facebook:hover,
-.btn-google:hover {
+.btn-facebook:hover, .btn-google:hover {
   color: #fff;
 }
 
@@ -399,10 +412,10 @@ iframe {
   top: 0;
   left: 0;
   background: #a64bf4;
-  background: -webkit-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: -o-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: -moz-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: linear-gradient(45deg, #00dbde, #fc00ff);
+  background: -webkit-linear-gradient(45deg, #00dbde, #c630f3);
+  background: -o-linear-gradient(45deg, #00dbde, #c630f3);
+  background: -moz-linear-gradient(45deg, #00dbde, #c630f3);
+  background: linear-gradient(to top right, 00dbde, #c630f3);
   opacity: 0;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -497,8 +510,7 @@ iframe {
     padding-right: 15px;
   }
 
-  .btn-face,
-  .btn-google {
+  .btn-face, .btn-google {
     width: 100%;
   }
 }

@@ -1,59 +1,6 @@
 <%- include("../partials/authHeader.ejs") %>
 
-<!-- <div class="container-fluid">
-    <div class="row no-gutter">
-		<div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-		<div class="col-md-8 col-lg-6">
-			<div class="login d-flex align-items-center py-5">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-9 col-lg-8 mx-auto">
-							<div class="main-container wider-container container">
-								<% if (errorMessage && errorMessage.length > 0) { %>
-									<div class="alert alert-primary">
-										<%= errorMessage %>
-									</div>
-								<% } else if (successMessage && successMessage.length > 0) { %>
-									<div class="alert alert-secondary">
-										<%= successMessage %>
-									</div>
-								<% } %>
-							</div>
-
-							<h3 class="login-heading mb-4">Welcome back!</h3>
-							<form action="/login" method="POST">
-								<div class="form-label-group">
-									<input id="input-username" class="form-control" type="text" name="username" placeholder="Username" required>
-									<label for="input-username">Username</label>
-								</div>
-								<div class="form-label-group">
-									<input id="input-password" class="form-control" type="password" name="password" placeholder="Password" required>
-									<label for="input-password">Password</label>
-								</div>
-								
-								<div class="custom-control custom-checkbox mb-3">
-									<input type="checkbox" class="custom-control-input" id="customCheck1">
-									<label class="custom-control-label" for="customCheck1">Remember password</label>
-								</div>
-								<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
-								
-								<button class="btn btn-lg btn-info btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-								<button class="btn btn-lg btn-info btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-					
-								
-								<div class="text-center">
-									<a class="small" href="/reset">Forgot password?</a>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>  
-		</div>
-    </div> 
-</div> -->
-
-
+<div class="background-blurred">Test</div>
 
 <div class="container-login"">
 	<div class="login-box">
@@ -122,6 +69,57 @@
 	</div>
 </div>
 
+<!-- <div class="container-fluid">
+    <div class="row no-gutter">
+		<div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+		<div class="col-md-8 col-lg-6">
+			<div class="login d-flex align-items-center py-5">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-9 col-lg-8 mx-auto">
+							<div class="main-container wider-container container">
+								<% if (errorMessage && errorMessage.length > 0) { %>
+									<div class="alert alert-primary">
+										<%= errorMessage %>
+									</div>
+								<% } else if (successMessage && successMessage.length > 0) { %>
+									<div class="alert alert-secondary">
+										<%= successMessage %>
+									</div>
+								<% } %>
+							</div>
 
+							<h3 class="login-heading mb-4">Welcome back!</h3>
+							<form action="/login" method="POST">
+								<div class="form-label-group">
+									<input id="input-username" class="form-control" type="text" name="username" placeholder="Username" required>
+									<label for="input-username">Username</label>
+								</div>
+								<div class="form-label-group">
+									<input id="input-password" class="form-control" type="password" name="password" placeholder="Password" required>
+									<label for="input-password">Password</label>
+								</div>
+								
+								<div class="custom-control custom-checkbox mb-3">
+									<input type="checkbox" class="custom-control-input" id="customCheck1">
+									<label class="custom-control-label" for="customCheck1">Remember password</label>
+								</div>
+								<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+								
+								<button class="btn btn-lg btn-info btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
+								<button class="btn btn-lg btn-info btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
+					
+								
+								<div class="text-center">
+									<a class="small" href="/reset">Forgot password?</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>  
+		</div>
+    </div> 
+</div> -->
 
 <%- include("../partials/authFooter.ejs") %>
