@@ -57,7 +57,6 @@ router.get("/", async function(req, res) {
             topIndexRes.on("end", () => {
                 // Get the top 10 stories
                 result = JSON.parse(data)
-                console.log(result)
                 for (let i = 0; i < 1; i++) {
                     https.get(hackerNewsURL + `item/${result[i]}/.json?print=pretty`, (HNtopStoriesRes) => {
                         let HNtopStories = "";
@@ -66,28 +65,42 @@ router.get("/", async function(req, res) {
                         });
                         HNtopStoriesRes.on("end", () => {
                             HNtopStories = JSON.parse(HNtopStories);
-                            var blogsPerPage = 4;
-                            var pageQuery = parseInt(req.query.page);
-                            var pageNumber = pageQuery ? pageQuery : 1;
-                            Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
-                                Blog.count().exec(function(err, blogCount) {
-                                    if (err) {
-                                        console.log(err);
-                                    } else {
-                                        console.log("REACHED HERE");
-                                        console.log(HNtopStories);
-                                        console.log(`THE TYPE IS: ${typeof(HNtopStories)}`);
-                                        res.render("blogs/blogsIndex", {
-                                            blogs: searchResults,
-                                            moment: moment,
-                                            current: pageNumber,
-                                            pages: Math.ceil(blogCount / blogsPerPage),
-                                            searchTarget: null,
-                                            HNtopStories: HNtopStories
-                                        });
-                                    }
-                                }); 
+                            // =======================
+                            https.get(`https://api.nasa.gov/planetary/apod?api_key={$process.env.NASA_API_KEY}`, (nasaRes) => {
+                                let nasaData = "";
+                                nasaRes.on("data", (chunk) => {
+                                    nasaData += chunk;
+                                });
+                                nasaRes.on("end", () => {
+                                    nasaData = JSON.parse(nasaData);
+
+                                    // ====================================================
+                                    var blogsPerPage = 4;
+                                    var pageQuery = parseInt(req.query.page);
+                                    var pageNumber = pageQuery ? pageQuery : 1;
+                                    Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
+                                        Blog.count().exec(function(err, blogCount) {
+                                            if (err) {
+                                                console.log(err);
+                                            } else {
+                                                console.log(nasaData);
+                                                res.render("blogs/blogsIndex", {
+                                                    blogs: searchResults,
+                                                    moment: moment,
+                                                    current: pageNumber,
+                                                    pages: Math.ceil(blogCount / blogsPerPage),
+                                                    searchTarget: null,
+                                                    HNtopStories: HNtopStories,
+                                                    dailyWonder: nasaData
+                                                });
+                                            }
+                                        }); 
+                                    });
+                                    // ====================================================
+                                });
+                            
                             });
+                            // =======================
                         });
                     });
                 }

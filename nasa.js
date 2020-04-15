@@ -1,5 +1,5 @@
 const https = require("https");
-BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=5378wgapJ8PDTIS62qIXCpsSZYHGiNYfYNNIXWKP";
+BASE_URL = `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API_KEY}`;
 
 https.get(BASE_URL, (res) => {
     let data = "";

@@ -2,3 +2,4 @@ node_modules/
 public/uploads/
 public/resume/
 public/img/
+.env
