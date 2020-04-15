@@ -155,6 +155,11 @@
 				</div>
 			</div> -->		
 			
+            <!-- Side Widget -->
+            <div class="card my-4">
+				<a class="btn btn-secondary center-element" href="/blogs/new">Create a new blog</a> 
+				
+			</div>
             <!-- Categories Widget -->
             <div class="card my-4">
 				<div class="center-children">
@@ -194,18 +199,27 @@
 					</div>
 				</div>
             </div>
-            <!-- Side Widget -->
-            <div class="card my-4">
-				<a class="btn btn-secondary center-element" href="/blogs/new">Create a new blog</a> 
-				
-			</div>
 			<!-- Hacker News API Top Stories -->
 			<div class="card my-4">
 				<div class="center-children">
 					<h5 class="card-header">Hacker News Top Stories</h5>
 				</div>
 				<div class="card-body">
-					
+					<ul>
+						<% for (let i = 0; i < 1; i++) { %>
+							<li>
+								<div>
+									<a href="<%= HNtopStories['url'] %>"><strong><%= HNtopStories["title"] %></strong></a>
+								</div>
+								<div>
+									Score: <%= HNtopStories["score"] %>
+								</div>
+								<div>
+									<%= HNtopStories.by %>
+								</div>
+							</li>
+						<% } %>
+					</ul>
 				</div>
             </div>
 			<!-- NASA API Daily Wonder -->

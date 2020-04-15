@@ -1,6 +1,7 @@
 // Packages:
 const express = require("express"),
       passport = require("passport"),
+      https = require("https"),
       moment = require("moment");
 // Models and middleware:
 const Blog = require("../models/blog"),
@@ -19,8 +20,9 @@ function escapeRegex(text) {
 // RESTful Routes: |  Index |  New  |  Create  |  Show  |  Edit  |  Update  |  Destroy  | 
 //                 |   GET  |  GET  |   POST   |  GET   |  GET   |   PUT    |   DELETE  |
 // ===== RESTful Blog Index (GET) =====
-router.get("/", function(req, res) {
+router.get("/", async function(req, res) {
     console.log(req.query);
+    // Fuzzy searching active:
     if (req.query.searchTarget) {
         escapeRegex(req.query.searchTarget);
          // "gi" are flags -> "g" is "global" which finds all matches rather than stopping at first match
@@ -45,24 +47,61 @@ router.get("/", function(req, res) {
             });
         });
     } else {
-        var blogsPerPage = 4;
-        var pageQuery = parseInt(req.query.page);
-        var pageNumber = pageQuery ? pageQuery : 1;
-        Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
-            Blog.count().exec(function(err, blogCount) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render("blogs/blogsIndex", {
-                        blogs: searchResults,
-                        moment: moment,
-                        current: pageNumber,
-                        pages: Math.ceil(blogCount / blogsPerPage),
-                        searchTarget: null
+        // ===================== REFACTOR REQUIRED ======================
+        hackerNewsURL = "https://hacker-news.firebaseio.com/v0/";
+        https.get(hackerNewsURL + "topstories.json", (topIndexRes) => {
+            let data = "";
+            topIndexRes.on("data", (chunk) => {
+                data += chunk;
+            });
+            topIndexRes.on("end", () => {
+                // Get the top 10 stories
+                result = JSON.parse(data)
+                console.log(result)
+                for (let i = 0; i < 1; i++) {
+                    https.get(hackerNewsURL + `item/${result[i]}/.json?print=pretty`, (HNtopStoriesRes) => {
+                        let HNtopStories = "";
+                        HNtopStoriesRes.on("data", (chunk) => {
+                            HNtopStories += chunk;
+                        });
+                        HNtopStoriesRes.on("end", () => {
+                            HNtopStories = JSON.parse(HNtopStories);
+                            var blogsPerPage = 4;
+                            var pageQuery = parseInt(req.query.page);
+                            var pageNumber = pageQuery ? pageQuery : 1;
+                            Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
+                                Blog.count().exec(function(err, blogCount) {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        console.log("REACHED HERE");
+                                        console.log(HNtopStories);
+                                        console.log(`THE TYPE IS: ${typeof(HNtopStories)}`);
+                                        res.render("blogs/blogsIndex", {
+                                            blogs: searchResults,
+                                            moment: moment,
+                                            current: pageNumber,
+                                            pages: Math.ceil(blogCount / blogsPerPage),
+                                            searchTarget: null,
+                                            HNtopStories: HNtopStories
+                                        });
+                                    }
+                                }); 
+                            });
+                        });
                     });
                 }
             });
+        }).on("error", (err) => {
+            console.log(err);
         });
+        // ===================== ================= ======================
+        // ======= Blog Rendering! =======
+
+        
+
+        // ==============================
+        
     }
 });
 
