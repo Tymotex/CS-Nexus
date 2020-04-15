@@ -206,18 +206,20 @@
 				</div>
 				<div class="card-body">
 					<ul>
-						<% for (let i = 0; i < 1; i++) { %>
-							<li>
-								<div>
-									<a href="<%= HNtopStories['url'] %>"><strong><%= HNtopStories["title"] %></strong></a>
-								</div>
-								<div>
-									Score: <%= HNtopStories["score"] %>
-								</div>
-								<div>
-									<%= HNtopStories.by %>
-								</div>
-							</li>
+						<% if (HNtopStories) { %>
+							<% for (let i = 0; i < 1; i++) { %>
+								<li>
+									<div>
+										<a href="<%= HNtopStories['url'] %>"><strong><%= HNtopStories["title"] %></strong></a>
+									</div>
+									<div>
+										Score: <%= HNtopStories["score"] %>
+									</div>
+									<div>
+										<%= HNtopStories.by %>
+									</div>
+								</li>
+							<% } %>
 						<% } %>
 					</ul>
 				</div>
