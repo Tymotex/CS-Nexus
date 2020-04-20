@@ -266,5 +266,19 @@ function sendMail(targetEmail, subject, content, flashMessage) {
     });
 }
 
+// ===== External Sign In/Register Options =====
+
+router.get("/auth/register/facebook", function(req, res) {
+    res.send("Trying to authenticate with Facebook");
+});
+
+router.get("/auth/register/google", passport.authenticate("google", {
+    scope: ["profile"]
+}));
+
+// ===== Privacy Policy =====
+router.get("/privacypolicy", function(req, res) {
+    res.render("privacy-policy/privacy-policy")
+})
 
 module.exports = router;

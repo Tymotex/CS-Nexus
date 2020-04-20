@@ -7,10 +7,12 @@ const express = require("express"),
       passport = require("passport"),
       LocalStrategy = require("passport-local"),
       passportLocalMongoose = require("passport-local-mongoose"),
+      GoogleStrategy = require("passport-google-oauth20"),
       flash = require("connect-flash")
       util = require("./util"),
       multer = require("multer");
 require("dotenv").config();
+
 const commentRoutes = require("./routes/commentRoutes"),
       blogRoutes = require("./routes/blogRoutes"),
       indexRoutes = require("./routes/indexRoutes"),
@@ -43,29 +45,24 @@ app.use(flash())
 // Passport Configuration:
 app.use(require("express-session")({
     // The secret message is used to encode and decode information from a session
-    secret: "Tim's secret sentence",   
+    secret: process.env.AUTH_SECRET,   
     resave: false,
     saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));   // Comes with passportLocalMongoose
-// passport.use(new LocalStrategy({
-//         usernameField: "emailOrUsername",
-//         passwordField: "password"
-//     },
-//     function(emailOrUsername, password, done) {
-//         User.findOne({ email: emailOrUsername }, function(err, user) {
-//             console.log("Found user by email!"); 
-//             if (!user) {
-//                 User.findOne({ username: emailOrUsername }, function(err, user) {
-//                     console.log("Found user by username");
-//                 });
-//             }
-//         });
+passport.use(
+    new GoogleStrategy({
+            callbackURL: "/auth/google/redirect",
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+        }, () => {
 
-//     }
-// ));
+        }
+    )
+);
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
