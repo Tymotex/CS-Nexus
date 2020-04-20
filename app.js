@@ -10,7 +10,7 @@ const express = require("express"),
       flash = require("connect-flash")
       util = require("./util"),
       multer = require("multer");
-
+require("dotenv").config();
 const commentRoutes = require("./routes/commentRoutes"),
       blogRoutes = require("./routes/blogRoutes"),
       indexRoutes = require("./routes/indexRoutes"),
@@ -28,7 +28,7 @@ const app = express();
 // util.wipeUsers();
 
 // ===== App Configuration and Setup =====
-databaseURI = "mongodb://localhost:27017/Blog"
+databaseURI = process.env.DB_CONN
 mongoose.connect(databaseURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");

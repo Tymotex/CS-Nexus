@@ -206,17 +206,17 @@
 				</div>
 				<div class="card-body">
 					<ul>
-						<% if (HNtopStories) { %>
+						<% if (HNtopStories && HNtopStories.length > 0) { %>
 							<% for (let i = 0; i < 1; i++) { %>
 								<li>
 									<div>
-										<a href="<%= HNtopStories['url'] %>"><strong><%= HNtopStories["title"] %></strong></a>
+										<a href='<%= HNtopStories[i]["url"] %>'><strong><%= HNtopStories[i]["title"] %></strong></a>
 									</div>
 									<div>
-										Score: <%= HNtopStories["score"] %>
+										Score: <%= HNtopStories[i]["score"] %>
 									</div>
 									<div>
-										<%= HNtopStories.by %>
+										<%= HNtopStories[i].by %>
 									</div>
 								</li>
 							<% } %>

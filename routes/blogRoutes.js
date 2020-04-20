@@ -3,6 +3,7 @@ const express = require("express"),
       passport = require("passport"),
       https = require("https"),
       moment = require("moment");
+require("dotenv").config();
 // Models and middleware:
 const Blog = require("../models/blog"),
       Comment = require("../models/comment"),
@@ -66,7 +67,7 @@ router.get("/", async function(req, res) {
                         HNtopStoriesRes.on("end", () => {
                             HNtopStories = JSON.parse(HNtopStories);
                             // =======================
-                            https.get(`https://api.nasa.gov/planetary/apod?api_key={$process.env.NASA_API_KEY}`, (nasaRes) => {
+                            https.get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API_KEY}`, (nasaRes) => {
                                 let nasaData = "";
                                 nasaRes.on("data", (chunk) => {
                                     nasaData += chunk;
@@ -83,7 +84,7 @@ router.get("/", async function(req, res) {
                                             if (err) {
                                                 console.log(err);
                                             } else {
-                                                console.log(nasaData);
+                                                console.log(HNtopStories);
                                                 res.render("blogs/blogsIndex", {
                                                     blogs: searchResults,
                                                     moment: moment,
