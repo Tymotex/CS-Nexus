@@ -1,17 +1,14 @@
-# CS-Nexus [WIP]
-Built with Bootstrap 4, jQuery, Node.js, Express, MongoDB with Mongoose and Passport.js for authentication.
+# CS-Nexus
+This is a personal portfolio site built from scratch with Node.js, Express, MongoDB (with Mongoose), Passport.js, Bootstrap 4 and jQuery. Includes an implementation for a RESTful blog posting API, comments and image/data snapshots for the companion Raspberry Pi project <a href="https://github.com/Tymotex/Hydroponix">here</a>. Also includes an authentication system and authorisation levels for managing blog posts. 
 
-### Planned Features:
-- Set up OAuth tokens with passport.js
-- Sending POST requests to Hydroponix routes should require authentication
-- Implement pagination for blogs, comments and Hydroponix data snapshots 
-- Set up parallax background scrolling effect
-- Set up fuzzy search for blogs 
-- Add a markdown editor for formatting blog content
+![Home-preview](/public/cs-home-preview.gif)
 
-### Using Forever:
+![Site-preview](/public/cs-nexus-preview.gif)
+
+### Startup:
 Inside the project root directory, run:
 ```
+npm install
 sudo npm install forever -g
 forever start app.js
 ```
