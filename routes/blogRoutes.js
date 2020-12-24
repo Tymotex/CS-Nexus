@@ -58,66 +58,53 @@ router.get("/", async function(req, res) {
             topIndexRes.on("end", () => {
                 // Get the top 10 stories
                 result = JSON.parse(data)
-                for (let i = 0; i < 1; i++) {
+                let HNtopStories = [];
+                for (let i = 0; i < 10; i++) {
+                    console.log(`Fetching item: ${i}, ${result[i]}`);
                     https.get(hackerNewsURL + `item/${result[i]}/.json?print=pretty`, (HNtopStoriesRes) => {
-                        let HNtopStories = "";
+                        var story = ""; 
                         HNtopStoriesRes.on("data", (chunk) => {
-                            HNtopStories += chunk;
+                            story += chunk;
                         });
                         HNtopStoriesRes.on("end", () => {
-                            HNtopStories = JSON.parse(HNtopStories);
-                            // =======================
-                            https.get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API_KEY}`, (nasaRes) => {
-                                let nasaData = "";
-                                nasaRes.on("data", (chunk) => {
-                                    nasaData += chunk;
-                                });
-                                nasaRes.on("end", () => {
-                                    nasaData = JSON.parse(nasaData);
-
-                                    // ====================================================
-                                    var blogsPerPage = 4;
-                                    var pageQuery = parseInt(req.query.page);
-                                    var pageNumber = pageQuery ? pageQuery : 1;
-                                    Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
-                                        Blog.count().exec(function(err, blogCount) {
-                                            if (err) {
-                                                console.log(err);
-                                            } else {
-                                                console.log(HNtopStories);
-                                                res.render("blogs/blogsIndex", {
-                                                    blogs: searchResults,
-                                                    moment: moment,
-                                                    current: pageNumber,
-                                                    pages: Math.ceil(blogCount / blogsPerPage),
-                                                    searchTarget: null,
-                                                    HNtopStories: HNtopStories,
-                                                    dailyWonder: nasaData
-                                                });
-                                            }
-                                        }); 
-                                    });
-                                    // ====================================================
-                                });
-                            
-                            });
-                            // =======================
+                            console.log(`============== STORY ${i} =============`);
+                            story = JSON.parse(story);
+                            HNtopStories.push(story);
                         });
                     });
                 }
+                console.log(HNtopStories);
             });
         }).on("error", (err) => {
             console.log(err);
         });
-        // ===================== ================= ======================
-        // ======= Blog Rendering! =======
-
-        
-
-        // ==============================
-        
     }
 });
+
+/*
+// =======================
+                            var blogsPerPage = 4;
+                            var pageQuery = parseInt(req.query.page);
+                            var pageNumber = pageQuery ? pageQuery : 1;
+                            Blog.find({}).skip(blogsPerPage * (pageNumber - 1)).limit(blogsPerPage).exec(function(err, searchResults) {
+                                Blog.count().exec(function(err, blogCount) {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        res.render("blogs/blogsIndex", {
+                                            blogs: searchResults,
+                                            moment: moment,
+                                            current: pageNumber,
+                                            pages: Math.ceil(blogCount / blogsPerPage),
+                                            searchTarget: null,
+                                            HNtopStories: HNtopStories,
+                                            dailyWonder: nasaData
+                                        });
+                                    }
+                                }); 
+                            });
+                            // =======================
+*/
 
 // ===== RESTful Blog New (GET) =====
 // 'New' shows the form for creating a new blog

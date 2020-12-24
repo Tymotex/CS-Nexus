@@ -30,8 +30,18 @@ const app = express();
 // util.wipeUsers();
 
 // ===== App Configuration and Setup =====
-databaseURI = process.env.DB_CONN
-mongoose.connect(databaseURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://tim:1989@cs-nexus-cluster.mxask.mongodb.net/csnexus?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect(err => {
+//     const collection = client.db("test").collection("devices");
+//     // perform actions on the collection object
+//     client.close();   
+// });
+
+// databaseURI = process.env.DB_CONN
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -45,24 +55,13 @@ app.use(flash())
 // Passport Configuration:
 app.use(require("express-session")({
     // The secret message is used to encode and decode information from a session
-    secret: process.env.AUTH_SECRET,   
+    secret: "test",   // TODO: Needs to be in .env
     resave: false,
     saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));   // Comes with passportLocalMongoose
-passport.use(
-    new GoogleStrategy({
-            callbackURL: "/auth/google/redirect",
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
-        }, () => {
-
-        }
-    )
-);
-
+passport.use(new LocalStrategy(User.authenticate()));   // LocalStrategy comes with passportLocalMongoose
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -79,7 +78,6 @@ app.use(function(req, res, next) {
     next();  
 });
 
-// ====
 app.use("/scripts", express.static(__dirname + "/node_modules/"))
 
 
@@ -91,5 +89,5 @@ app.use("/hydroponix", hydroponixRoutes);
 
 // ===== Server Startup =====
 app.listen(3000, function() {
-    console.log("Express server listening on port 3000!");
+    console.log(" > Express server listening on port 3000");
 });
