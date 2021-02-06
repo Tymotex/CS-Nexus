@@ -4,16 +4,3 @@ This is a personal portfolio site built from scratch with Node.js, Express, Mong
 Home             |  Preview
 :-------------------------:|:-------------------------:
 ![Home-preview](/public/cs-home-preview.gif)  |  ![Site-preview](/public/cs-nexus-preview.gif)
-
-### Startup:
-Inside the project root directory, run:
-```
-npm install
-sudo npm install forever -g
-forever start app.js
-```
-To view running processes and stop specific forever process, run:
-```
-forever list
-forever stop <foreverProcessID>
-```
